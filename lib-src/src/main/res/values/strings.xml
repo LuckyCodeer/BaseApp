@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cancel">取消</string>
+    <string name="confirm">确定</string>
+    <string name="go_setting">去设置</string>
+    <string name="dialog_title">提示</string>
+</resources>

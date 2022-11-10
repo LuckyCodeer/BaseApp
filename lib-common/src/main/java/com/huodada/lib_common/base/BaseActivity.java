@@ -39,7 +39,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     /**
-     * View 事件处理方法
+     * View 事件处理方法，如点击，滑动，放大等
      */
     protected abstract void onViewEvent();
 
