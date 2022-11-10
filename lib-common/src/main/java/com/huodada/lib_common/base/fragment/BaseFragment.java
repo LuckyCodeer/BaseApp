@@ -1,40 +1,41 @@
-package com.huodada.lib_common.base;
+package com.huodada.lib_common.base.fragment;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.alibaba.android.arouter.launcher.ARouter;
+import androidx.fragment.app.Fragment;
 
 import org.greenrobot.eventbus.EventBus;
 
 /**
- * 基类Activity 其它Activity继承此Activity
- * 推荐继承 {@link BaseDataBindingActivity}
  * created by yhw
- * date 2022/11/9
+ * date 2022/11/10
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseFragment extends Fragment {
+    protected View mRootView;
 
+    @Nullable
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        ARouter.getInstance().inject(this);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (!isDataBinding()) {
-            setContentView(getLayoutId());
-            initView();
+            mRootView = inflater.inflate(getLayoutId(), container);
+            initView(mRootView);
             onViewEvent();
         }
         if (isRegisterEventBus()) {
             EventBus.getDefault().register(this);
         }
+        return mRootView;
     }
 
     /**
      * 初始化控件
      */
-    protected void initView() {
+    protected void initView(View rootView) {
 
     }
 
@@ -63,7 +64,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
         if (isRegisterEventBus()) {
             EventBus.getDefault().unregister(this);

@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.blankj.utilcode.util.RegexUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.DataBindingHolder;
@@ -18,12 +19,14 @@ import com.huodada.lib_common.base.BaseDataBindingActivity;
 import com.huodada.lib_common.entity.Friend;
 import com.huodada.lib_common.http.HttpListener;
 import com.huodada.lib_common.http.HttpUtils;
+import com.huodada.lib_common.router.RouterPath;
 
 import java.util.List;
 
 /**
  * Demo
  */
+@Route(path = RouterPath.DEMO_ACTIVITY)
 public class DemoActivity extends BaseDataBindingActivity<ActivityDemoBinding> {
 
     @Override

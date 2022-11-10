@@ -1,10 +1,8 @@
 package com.huodada;
 
-import android.content.Intent;
-
 import com.huodada.databinding.ActivityMainBinding;
 import com.huodada.lib_common.base.BaseDataBindingActivity;
-import com.huodada.lib_common.base.WebActivity;
+import com.huodada.lib_common.router.RouterUtils;
 
 /**
  * 主界面
@@ -19,11 +17,11 @@ public class MainActivity extends BaseDataBindingActivity<ActivityMainBinding> {
     @Override
     protected void onViewEvent() {
         mDataBinding.btnDemo.setOnClickListener(view -> {
-            startActivity(new Intent(this, DemoActivity.class));
+            RouterUtils.jumpDemo();
         });
 
         mDataBinding.btnBrowser.setOnClickListener(view -> {
-            startActivity(new Intent(this, WebActivity.class));
+            RouterUtils.jumpWeb("https://jd.com");
         });
     }
 }

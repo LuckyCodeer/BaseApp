@@ -2,14 +2,20 @@ package com.huodada.lib_common.base;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.huodada.lib_common.R;
 import com.huodada.lib_common.databinding.ActivityWebBinding;
+import com.huodada.lib_common.router.RouterPath;
 import com.just.agentweb.AgentWeb;
 
 /**
  * 浏览器
  */
+@Route(path = RouterPath.WEB_ACTIVITY)
 public class WebActivity extends BaseDataBindingActivity<ActivityWebBinding> {
+    @Autowired
+    String url; //地址
     private AgentWeb mAgentWeb;
 
     @Override
@@ -30,7 +36,7 @@ public class WebActivity extends BaseDataBindingActivity<ActivityWebBinding> {
                 .useDefaultIndicator()
                 .createAgentWeb()
                 .ready()
-                .go("https://www.jd.com");
+                .go(url);
     }
 
     @Override
