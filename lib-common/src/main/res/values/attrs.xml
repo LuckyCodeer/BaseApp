@@ -40,4 +40,14 @@
         </attr>
     </declare-styleable>
 
+    <!--列表控件-->
+    <declare-styleable name="BaseSmartRefreshLayout">
+        <!--是否允许下拉刷新-->
+        <attr name="enableRefresh" format="boolean"/>
+        <!--是否允许上拉加载更多-->
+        <attr name="enableLoadMore" format="boolean"/>
+        <!--空布局文本文字-->
+        <attr name="emptyText" format="string"/>
+    </declare-styleable>
+
 </resources>

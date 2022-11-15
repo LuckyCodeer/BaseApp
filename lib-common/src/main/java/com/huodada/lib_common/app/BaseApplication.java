@@ -8,19 +8,38 @@ import androidx.multidex.MultiDexApplication;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.hjq.toast.ToastUtils;
 import com.huodada.lib_common.BuildConfig;
+import com.huodada.lib_src.R;
+import com.scwang.smart.refresh.footer.ClassicsFooter;
+import com.scwang.smart.refresh.header.ClassicsHeader;
+import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import rxhttp.RxHttpPlugins;
-import rxhttp.wrapper.param.Method;
 
 /**
+ * Application
  * created by yhw
  * date 2022/11/8
  */
 public class BaseApplication extends MultiDexApplication {
+
+    // 设置下拉刷新控件全局的Header构建器
+    // static 代码段可以防止内存泄露
+    static {
+        //设置全局的Header构建器
+        SmartRefreshLayout.setDefaultRefreshHeaderCreator((context, layout) -> {
+            layout.setPrimaryColorsId(R.color.colorPrimary, R.color.white);//全局设置主题颜色
+            return new ClassicsHeader(context);//.setTimeFormat(new DynamicTimeFormat("更新于 %s"));//指定为经典Header，默认是 贝塞尔雷达Header
+        });
+        //设置全局的Footer构建器
+        SmartRefreshLayout.setDefaultRefreshFooterCreator((context, layout) -> {
+            //指定为经典Footer，默认是 BallPulseFooter
+            return new ClassicsFooter(context).setDrawableSize(20);
+        });
+    }
 
     @Override
     public void onCreate() {
@@ -49,12 +68,12 @@ public class BaseApplication extends MultiDexApplication {
         RxHttpPlugins.init(genericClient())
                 .setDebug(BuildConfig.DEBUG)
                 .setOnParamAssembly(p -> {
-                    Method method = p.getMethod();
-                    if (method.isGet()) { //Get请求
-
-                    } else if (method.isPost()) { //Post请求
-
-                    }
+//                    Method method = p.getMethod();
+//                    if (method.isGet()) { //Get请求
+//
+//                    } else if (method.isPost()) { //Post请求
+//
+//                    }
                     p.addHeader("systemType", "android"); //添加公共请求头
                 })
                 //替换 data:"" 为"",防止对象转换失败

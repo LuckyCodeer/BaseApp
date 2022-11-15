@@ -12,11 +12,12 @@
         android:layout_height="match_parent"
         tools:context=".DemoActivity">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
+        <com.huodada.lib_common.view.layout.BaseSmartRefreshLayout
+            android:id="@+id/refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+            app:emptyText="暂时没有数据~"
+            app:enableLoadMore="true" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
