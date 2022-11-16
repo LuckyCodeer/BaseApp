@@ -10,6 +10,12 @@ import com.huodada.lib_common.router.RouterUtils;
 public class MainActivity extends BaseDataBindingActivity<ActivityMainBinding> {
 
     @Override
+    protected void initView() {
+        super.initView();
+        setTitle(R.string.app_name);
+    }
+
+    @Override
     protected int getLayoutId() {
         return R.layout.activity_main;
     }

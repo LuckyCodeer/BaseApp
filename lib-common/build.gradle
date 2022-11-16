@@ -97,4 +97,6 @@ dependencies {
         exclude group: 'com.android.support'
     })
     annotationProcessor 'com.alibaba:arouter-compiler:1.5.2'
+    // 标题栏框架：https://github.com/getActivity/TitleBar
+    api 'com.github.getActivity:TitleBar:9.6'
 }

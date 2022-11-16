@@ -7,9 +7,10 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         tools:context=".DemoActivity">
 
         <com.huodada.lib_common.view.layout.BaseSmartRefreshLayout
@@ -19,5 +20,5 @@
             app:emptyText="暂时没有数据~"
             app:enableLoadMore="true" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </layout>

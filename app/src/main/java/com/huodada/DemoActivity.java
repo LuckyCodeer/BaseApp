@@ -40,6 +40,7 @@ public class DemoActivity extends BaseDataBindingActivity<ActivityDemoBinding> {
     @Override
     protected void initView() {
         super.initView();
+        setTitle(R.string.app_name);
 //        View view = LayoutInflater.from(this)
 //                .inflate(com.huodada.lib_common.R.layout.empty_layout, null);
 ////        mTvEmpty = view.findViewById(com.huodada.lib_common.R.id.tv_content);

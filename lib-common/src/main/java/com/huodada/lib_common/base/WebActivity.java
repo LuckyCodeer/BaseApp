@@ -1,5 +1,7 @@
 package com.huodada.lib_common.base;
 
+import android.webkit.WebView;
+
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -8,6 +10,7 @@ import com.huodada.lib_common.R;
 import com.huodada.lib_common.databinding.ActivityWebBinding;
 import com.huodada.lib_common.router.RouterPath;
 import com.just.agentweb.AgentWeb;
+import com.just.agentweb.MiddlewareWebChromeBase;
 
 /**
  * 浏览器
@@ -37,6 +40,13 @@ public class WebActivity extends BaseDataBindingActivity<ActivityWebBinding> {
                 .createAgentWeb()
                 .ready()
                 .go(url);
+        mAgentWeb.getWebCreator().getWebView().setWebChromeClient(new MiddlewareWebChromeBase() {
+            @Override
+            public void onReceivedTitle(WebView view, String title) {
+                super.onReceivedTitle(view, title);
+                setTitle(title);
+            }
+        });
     }
 
     @Override

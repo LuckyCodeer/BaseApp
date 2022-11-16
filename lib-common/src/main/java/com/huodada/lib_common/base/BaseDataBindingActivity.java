@@ -1,10 +1,13 @@
 package com.huodada.lib_common.base;
 
 import android.os.Bundle;
+import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
+
+import com.huodada.lib_common.R;
 
 /**
  * DataBinding Activity
@@ -18,9 +21,17 @@ public abstract class BaseDataBindingActivity<DB extends ViewDataBinding> extend
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mDataBinding = DataBindingUtil.setContentView(this, getLayoutId());
+        if (isShowActionBar()) {
+            setContentView(R.layout.activity_base_layout);
+            mDataBinding = DataBindingUtil.inflate(getLayoutInflater(), getLayoutId(), null, false);
+            ((ViewGroup) findViewById(R.id.fl_content)).addView(mDataBinding.getRoot());
+            mActionBar = findViewById(R.id.actionbar);
+        } else {
+            mDataBinding = DataBindingUtil.setContentView(this, getLayoutId());
+        }
         initView();
         onViewEvent();
+        initSoftKeyboard();
     }
 
     @Override

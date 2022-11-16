@@ -1,11 +1,18 @@
 package com.huodada.lib_common.base;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.huodada.lib_common.R;
+import com.huodada.lib_common.view.layout.ActionBar;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -16,15 +23,24 @@ import org.greenrobot.eventbus.EventBus;
  * date 2022/11/9
  */
 public abstract class BaseActivity extends AppCompatActivity {
+    protected ActionBar mActionBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ARouter.getInstance().inject(this);
         if (!isDataBinding()) {
-            setContentView(getLayoutId());
+            //每个界面添加actionbar
+            if (isShowActionBar()) {
+                setContentView(R.layout.activity_base_layout);
+                ((ViewGroup) findViewById(R.id.fl_content)).addView(getLayoutInflater().inflate(getLayoutId(), null));
+                mActionBar = findViewById(R.id.actionbar);
+            } else {
+                setContentView(getLayoutId());
+            }
             initView();
             onViewEvent();
+            initSoftKeyboard();
         }
         if (isRegisterEventBus()) {
             EventBus.getDefault().register(this);
@@ -60,6 +76,69 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     protected boolean isRegisterEventBus() {
         return false;
+    }
+
+    /**
+     * 是否显示actionbar
+     */
+    protected boolean isShowActionBar() {
+        return true;
+    }
+
+    @Override
+    public void setTitle(int titleId) {
+        super.setTitle(titleId);
+        if (mActionBar != null){
+            mActionBar.setCenterText(getString(titleId));
+        }
+    }
+
+    @Override
+    public void setTitle(CharSequence title) {
+        super.setTitle(title);
+        if (mActionBar != null){
+            mActionBar.setCenterText(title);
+        }
+    }
+
+    /**
+     * 初始化软键盘
+     */
+    protected void initSoftKeyboard() {
+        // 点击外部隐藏软键盘，提升用户体验
+        getContentView().setOnClickListener(v -> {
+            // 隐藏软键，避免内存泄漏
+            hideKeyboard(getCurrentFocus());
+        });
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        // 隐藏软键，避免内存泄漏
+        hideKeyboard(getCurrentFocus());
+    }
+
+    /**
+     * 隐藏软键盘
+     */
+    protected void hideKeyboard(View view) {
+        if (view == null) {
+            return;
+        }
+        InputMethodManager manager = (InputMethodManager) view.getContext()
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (manager == null) {
+            return;
+        }
+        manager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
+    /**
+     * 和 setContentView 对应的方法
+     */
+    public ViewGroup getContentView() {
+        return findViewById(Window.ID_ANDROID_CONTENT);
     }
 
     @Override
