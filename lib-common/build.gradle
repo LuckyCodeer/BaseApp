@@ -85,7 +85,7 @@ dependencies {
     //https://github.com/greenrobot/EventBus
     api 'org.greenrobot:eventbus:3.3.1'
     //https://github.com/alibaba/fastjson2
-    api 'com.alibaba:fastjson:2.0.18.android'
+    api 'com.alibaba:fastjson:2.0.19.android'
     //https://github.com/chenBingX/SuperTextView
     api 'com.github.chenBingX:SuperTextView:3.2.6.99'
     //https://github.com/Justson/AgentWeb
@@ -99,4 +99,8 @@ dependencies {
     annotationProcessor 'com.alibaba:arouter-compiler:1.5.2'
     // 标题栏框架：https://github.com/getActivity/TitleBar
     api 'com.github.getActivity:TitleBar:9.6'
+    // Popup框架 https://github.com/razerdp/BasePopup
+    api 'io.github.razerdp:BasePopup:3.2.0'
+    //标签布局 https://github.com/LuckyCodeer/TagLayout
+    api'com.yhw.library:taglayout:1.0.1'
 }
