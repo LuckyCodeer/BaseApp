@@ -2,6 +2,7 @@ package com.huodada;
 
 import com.huodada.databinding.ActivityMainBinding;
 import com.huodada.lib_common.base.BaseDataBindingActivity;
+import com.huodada.lib_common.dialog.DateSelectDialog;
 import com.huodada.lib_common.router.RouterUtils;
 
 /**
@@ -28,6 +29,12 @@ public class MainActivity extends BaseDataBindingActivity<ActivityMainBinding> {
 
         mDataBinding.btnBrowser.setOnClickListener(view -> {
             RouterUtils.jumpWeb("https://jd.com");
+        });
+
+        mDataBinding.btnSelectTime.setOnClickListener(view -> {
+            new DateSelectDialog(this, (date, v) -> {
+
+            }).setType(2).build().show();
         });
     }
 }

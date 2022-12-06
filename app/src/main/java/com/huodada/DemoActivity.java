@@ -1,34 +1,24 @@
 package com.huodada;
 
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.DataBindingHolder;
 import com.hjq.toast.ToastUtils;
 import com.huodada.databinding.ActivityDemoBinding;
 import com.huodada.databinding.DemoItemLayoutBinding;
+import com.huodada.lib_common.adapter.CommonAdapter;
 import com.huodada.lib_common.base.BaseDataBindingActivity;
 import com.huodada.lib_common.entity.Friend;
 import com.huodada.lib_common.http.HttpListener;
 import com.huodada.lib_common.http.HttpUtils;
 import com.huodada.lib_common.router.RouterPath;
-import com.huodada.lib_common.view.layout.BaseSmartRefreshLayout;
+import com.huodada.lib_common.router.RouterUtils;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
-import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.util.List;
-
-import kotlin.Unit;
-import kotlin.jvm.functions.Function3;
 
 /**
  * Demo
@@ -40,11 +30,7 @@ public class DemoActivity extends BaseDataBindingActivity<ActivityDemoBinding> {
     @Override
     protected void initView() {
         super.initView();
-        setTitle(R.string.app_name);
-//        View view = LayoutInflater.from(this)
-//                .inflate(com.huodada.lib_common.R.layout.empty_layout, null);
-////        mTvEmpty = view.findViewById(com.huodada.lib_common.R.id.tv_content);
-//        mDataBinding.refreshLayout.setRefreshContent(view);
+        setTitle("这是一个很长的标题这是一个很长的标题这是一个很长的标题");
         requestData();
     }
 
@@ -55,17 +41,8 @@ public class DemoActivity extends BaseDataBindingActivity<ActivityDemoBinding> {
         HttpUtils.friend(this, new HttpListener<List<Friend>>() {
             @Override
             public void onSuccess(List<Friend> friends) {
-                friends.clear();
                 MyAdapter adapter = new MyAdapter(friends);
-            /*    adapter.setOnItemClickListener(new Function3<BaseQuickAdapter<Friend, ?>, View, Integer, Unit>() {
-                    @Override
-                    public Unit invoke(BaseQuickAdapter<Friend, ?> friendBaseQuickAdapter, View view, Integer integer) {
-                        ToastUtils.show("33333");
-                        return null;
-                    }
-                });*/
                 mDataBinding.refreshLayout.setAdapter(adapter, pageNum, 10000);
-//                ToastUtils.show("请求成功");
             }
 
             @Override
@@ -77,20 +54,23 @@ public class DemoActivity extends BaseDataBindingActivity<ActivityDemoBinding> {
 
     @Override
     protected void onViewEvent() {
-       /* mDataBinding.refreshLayout.getRefreshLayout().setOnRefreshListener(refreshLayout -> {
+        //单独设置下拉刷新
+        mDataBinding.refreshLayout.setOnRefreshListener(refreshLayout -> {
             pageNum = 1;
             requestData();
         });
 
-        mDataBinding.refreshLayout.getRefreshLayout().setOnLoadMoreListener(refreshLayout -> {
-            pageNum ++;
+        //单独设置上拉加载更多
+        mDataBinding.refreshLayout.setOnLoadMoreListener(refreshLayout -> {
+            pageNum++;
             requestData();
         });
-*/
+
+        //同时设置下拉刷新和上拉加载更多
         mDataBinding.refreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                pageNum ++;
+                pageNum++;
                 requestData();
             }
 
@@ -101,9 +81,16 @@ public class DemoActivity extends BaseDataBindingActivity<ActivityDemoBinding> {
             }
         });
 
+        //列表item单击事件
         mDataBinding.refreshLayout.setOnItemClickListener((itemView, position, item) -> {
             Friend friend = (Friend) item;
-            ToastUtils.show(friend.getName());
+            RouterUtils.jumpWeb(friend.getLink());
+        });
+
+        //列表item长按事件
+        mDataBinding.refreshLayout.setOnItemLongClickListener((itemView, position, item) -> {
+            Friend friend = (Friend) item;
+            ToastUtils.show("长按事件：" + friend.getName());
         });
     }
 
@@ -113,22 +100,27 @@ public class DemoActivity extends BaseDataBindingActivity<ActivityDemoBinding> {
     }
 
 
-    private static class MyAdapter extends BaseQuickAdapter<Friend, DataBindingHolder<DemoItemLayoutBinding>> {
+    /**
+     * 列表适配器，一般建议写到外面，仅demo演示
+     */
+    private static class MyAdapter extends CommonAdapter<Friend, DemoItemLayoutBinding> {
 
         public MyAdapter(@NonNull List<? extends Friend> items) {
             super(items);
         }
 
         @Override
-        protected void onBindViewHolder(@NonNull DataBindingHolder<DemoItemLayoutBinding> dataBindingHolder, int i, @Nullable Friend friend) {
-            dataBindingHolder.getBinding().setFriend(friend);
+        public void onBindViewHolder(@NonNull DataBindingHolder<DemoItemLayoutBinding> holder, DemoItemLayoutBinding dataBinding, int position, @Nullable Friend friend) {
+            //将数据类设置给布局文件
+            dataBinding.setFriend(friend);
+            //如果布局里还有其它逻辑，如颜色判断，隐藏显示，点击事件等，可用： dataBinding.xxx  xxx代表布局里控件的ID
+//            dataBinding.tvContent.setTextColor(getContext().getResources().getColor(R.color.teal_700));
+            //如果用到context 则使用   getContext()
         }
 
-        @NonNull
         @Override
-        protected DataBindingHolder<DemoItemLayoutBinding> onCreateViewHolder(@NonNull Context context, @NonNull ViewGroup viewGroup, int i) {
-            return new DataBindingHolder<>(DataBindingUtil.inflate(LayoutInflater.from(context),
-                    R.layout.demo_item_layout, viewGroup, false));
+        public int getItemLayoutId(int viewType) {
+            return R.layout.demo_item_layout;
         }
     }
 }

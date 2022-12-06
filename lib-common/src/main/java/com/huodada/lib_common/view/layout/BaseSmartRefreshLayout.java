@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -64,7 +65,7 @@ public class BaseSmartRefreshLayout extends FrameLayout {
             ta.recycle();
         }
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
     }
 
     /**
@@ -121,7 +122,7 @@ public class BaseSmartRefreshLayout extends FrameLayout {
             if (mOnItemLongClickListener != null) {
                 mOnItemLongClickListener.onItemLongClick(view, integer, mAdapter.getItem(integer));
             }
-            return null;
+            return true;
         });
     }
 
@@ -250,6 +251,13 @@ public class BaseSmartRefreshLayout extends FrameLayout {
 
     public interface OnItemLongClickListener {
         void onItemLongClick(View itemView, int position, Object item);
+    }
+
+    /**
+     * 添加分割线
+     */
+    public void addItemDecoration(@NonNull RecyclerView.ItemDecoration decor) {
+        mRecyclerView.addItemDecoration(decor);
     }
 
     /**

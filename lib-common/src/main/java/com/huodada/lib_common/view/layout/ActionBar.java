@@ -385,7 +385,7 @@ public class ActionBar extends RelativeLayout {
         TextView tv = new TextView(getContext());
         tv.setTextSize(centerTextSize);
         tv.setTextColor(ContextCompat.getColor(getContext(), centerTextColor));
-        tv.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
+//        tv.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
         return tv;
     }
 
