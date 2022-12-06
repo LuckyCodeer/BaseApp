@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.huodada.lib_common.dialog.LoadingDialog;
+
 import org.greenrobot.eventbus.EventBus;
 
 /**
@@ -17,6 +19,7 @@ import org.greenrobot.eventbus.EventBus;
  */
 public abstract class BaseFragment extends Fragment {
     protected View mRootView;
+    protected LoadingDialog mLoadingDialog;
 
     @Nullable
     @Override
@@ -61,6 +64,26 @@ public abstract class BaseFragment extends Fragment {
      */
     protected boolean isRegisterEventBus() {
         return false;
+    }
+
+    /**
+     * 显示加载框
+     */
+    public void showLoading() {
+        if (mLoadingDialog == null) {
+            mLoadingDialog = new LoadingDialog(getContext());
+        }
+        mLoadingDialog.showDialog();
+    }
+
+    /**
+     * 隐藏加载框
+     */
+    public void dismissLoading(){
+        if (mLoadingDialog == null){
+            return;
+        }
+        mLoadingDialog.dismissDialog();
     }
 
     @Override

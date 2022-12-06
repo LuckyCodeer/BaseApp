@@ -24,13 +24,13 @@ import java.util.List;
  * Demo
  */
 @Route(path = RouterPath.DEMO_ACTIVITY)
-public class DemoActivity extends BaseDataBindingActivity<ActivityDemoBinding> {
+public class ListDemoActivity extends BaseDataBindingActivity<ActivityDemoBinding> {
     private int pageNum = 1;
 
     @Override
     protected void initView() {
         super.initView();
-        setTitle("这是一个很长的标题这是一个很长的标题这是一个很长的标题");
+        setTitle("这是一个列表");
         requestData();
     }
 
@@ -38,15 +38,18 @@ public class DemoActivity extends BaseDataBindingActivity<ActivityDemoBinding> {
      * 网络数据请求
      */
     private void requestData() {
+        showLoading();
         HttpUtils.friend(this, new HttpListener<List<Friend>>() {
             @Override
             public void onSuccess(List<Friend> friends) {
+                dismissLoading();
                 MyAdapter adapter = new MyAdapter(friends);
                 mDataBinding.refreshLayout.setAdapter(adapter, pageNum, 10000);
             }
 
             @Override
             public void onFail(int errorCode, String errorMsg) {
+                dismissLoading();
                 ToastUtils.show(errorMsg);
             }
         });

@@ -105,4 +105,6 @@ dependencies {
     api'com.yhw.library:taglayout:1.0.1'
     //日期时间选择
     api 'com.github.LuckyCodeer.Android-PickerView:pickerview:4.2.5'
+    //图片选择
+    api 'com.github.Silence0928:Matisse:0.5.4'
 }

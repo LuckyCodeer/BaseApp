@@ -10,6 +10,7 @@ import java.util.List;
 import rxhttp.RxHttp;
 
 /**
+ * Http接口请求工具类
  * created by yhw
  * date 2022/11/8
  */

@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.huodada.lib_common.R;
+import com.huodada.lib_common.dialog.LoadingDialog;
 import com.huodada.lib_common.view.layout.ActionBar;
 
 import org.greenrobot.eventbus.EventBus;
@@ -24,6 +25,7 @@ import org.greenrobot.eventbus.EventBus;
  */
 public abstract class BaseActivity extends AppCompatActivity {
     protected ActionBar mActionBar;
+    protected LoadingDialog mLoadingDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,7 +90,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public void setTitle(int titleId) {
         super.setTitle(titleId);
-        if (mActionBar != null){
+        if (mActionBar != null) {
             mActionBar.setCenterText(getString(titleId));
         }
     }
@@ -96,9 +98,36 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public void setTitle(CharSequence title) {
         super.setTitle(title);
-        if (mActionBar != null){
+        if (mActionBar != null) {
             mActionBar.setCenterText(title);
         }
+    }
+
+    /**
+     * 隐藏ActionBar返回按钮
+     */
+    public void hideActionBarBack() {
+        mActionBar.getLeftView().setVisibility(View.INVISIBLE);
+    }
+
+    /**
+     * 显示加载框
+     */
+    public void showLoading() {
+        if (mLoadingDialog == null) {
+            mLoadingDialog = new LoadingDialog(this);
+        }
+        mLoadingDialog.showDialog();
+    }
+
+    /**
+     * 隐藏加载框
+     */
+    public void dismissLoading(){
+        if (mLoadingDialog == null){
+            return;
+        }
+        mLoadingDialog.dismissDialog();
     }
 
     /**
@@ -147,5 +176,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (isRegisterEventBus()) {
             EventBus.getDefault().unregister(this);
         }
+        dismissLoading();
     }
 }

@@ -14,7 +14,7 @@
         android:theme="@style/Theme.BaseApp"
         tools:targetApi="31">
         <activity
-            android:name=".DemoActivity"
+            android:name=".ListDemoActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

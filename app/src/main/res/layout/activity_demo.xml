@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".DemoActivity">
+        tools:context=".ListDemoActivity">
 
         <com.huodada.lib_common.view.layout.BaseSmartRefreshLayout
             android:id="@+id/refresh_layout"
