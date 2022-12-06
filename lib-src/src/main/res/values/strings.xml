@@ -6,4 +6,5 @@
     <string name="dialog_title">提示</string>
     <string name="empty_data_text">暂无数据</string>
     <string name="loading">加载中…</string>
+    <string name="please_select">请选择</string>
 </resources>

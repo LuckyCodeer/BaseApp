@@ -45,5 +45,17 @@
             android:layout_height="wrap_content"
             android:text="选择图片" />
 
+        <Button
+            android:id="@+id/btn_dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="对话框" />
+
+        <Button
+            android:id="@+id/btn_select_dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="底部选择对话框" />
+
     </LinearLayout>
 </layout>

@@ -7,11 +7,14 @@ import androidx.annotation.Nullable;
 import com.hjq.toast.ToastUtils;
 import com.huodada.databinding.ActivityMainBinding;
 import com.huodada.lib_common.base.BaseDataBindingActivity;
+import com.huodada.lib_common.dialog.BottomListDialog;
+import com.huodada.lib_common.dialog.CommonAlertDialog;
 import com.huodada.lib_common.dialog.DateSelectDialog;
 import com.huodada.lib_common.router.RouterUtils;
 import com.huodada.lib_common.utils.ImagePickerUtils;
 import com.zhihu.matisse.Matisse;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -53,6 +56,29 @@ public class MainActivity extends BaseDataBindingActivity<ActivityMainBinding> {
         //选择图片
         mDataBinding.btnSelectPic.setOnClickListener(view -> {
             ImagePickerUtils.openGallery(this, 100, 10);
+        });
+
+        //对话框
+        mDataBinding.btnDialog.setOnClickListener(view -> {
+            new CommonAlertDialog(this).setMessage("确定要删除吗？")
+                    .setOnConfirmClickListener(v -> {
+                        CommonAlertDialog.showDialog(this, "这条数据已经被删除！");
+                    }).show();
+        });
+
+        //底部选择对话框
+        mDataBinding.btnSelectDialog.setOnClickListener(view -> {
+            List<String> items = new ArrayList<>();
+            items.add("红色");
+            items.add("黄色");
+            items.add("绿色");
+            items.add("橙色");
+            items.add("紫色");
+            new BottomListDialog(this).setItems(items)
+                    .setOnConfirmSelectListener((position, name) -> {
+                        ToastUtils.show(name);
+                    })
+                    .show();
         });
     }
 
