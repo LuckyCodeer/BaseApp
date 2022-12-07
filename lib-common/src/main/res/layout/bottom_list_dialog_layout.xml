@@ -47,7 +47,7 @@
                     android:singleLine="true"
                     android:text="@string/please_select"
                     android:textColor="@color/black_333333"
-                    android:textSize="14sp"
+                    android:textSize="15sp"
                     android:textStyle="bold" />
 
                 <TextView

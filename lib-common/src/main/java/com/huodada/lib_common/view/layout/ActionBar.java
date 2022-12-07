@@ -27,6 +27,7 @@ public class ActionBar extends RelativeLayout {
     private LinearLayout llLeft;
     private LinearLayout llCenter;
     private LinearLayout llRight;
+    private TextView mRightText;
 
     /**
      * 总布局
@@ -204,6 +205,10 @@ public class ActionBar extends RelativeLayout {
      * @param text 文字
      */
     public void setCenterText(CharSequence text) {
+        if (mRightText != null){
+            mRightText.setText(text);
+            return;
+        }
         setCenterText(text, null);
     }
 
@@ -251,19 +256,19 @@ public class ActionBar extends RelativeLayout {
         } else {
             llRight.setVisibility(VISIBLE);
             llRight.removeAllViews();
-            TextView tvRight = getTextView();
-            tvRight.setText(text);
-            tvRight.setTextSize(textSize);
-            tvRight.setTextColor(ContextCompat.getColor(getContext(), rightTextColor));
+            mRightText = getTextView();
+            mRightText.setText(text);
+            mRightText.setTextSize(textSize);
+            mRightText.setTextColor(ContextCompat.getColor(getContext(), rightTextColor));
             if (iconRes != 0) {
                 final Drawable leftDrawable = ContextCompat.getDrawable(getContext(), iconRes);
                 if (leftDrawable != null) {
                     leftDrawable.setBounds(0, 0, leftDrawable.getMinimumWidth(), leftDrawable.getMinimumHeight());
-                    tvRight.setCompoundDrawables(leftDrawable, null, null, null);
-                    tvRight.setCompoundDrawablePadding(DisplayUtil.dip2px(getContext(), 3));
+                    mRightText.setCompoundDrawables(leftDrawable, null, null, null);
+                    mRightText.setCompoundDrawablePadding(DisplayUtil.dip2px(getContext(), 3));
                 }
             }
-            llRight.addView(tvRight);
+            llRight.addView(mRightText);
             if (l != null) {
                 llRight.setOnClickListener(l);
             }

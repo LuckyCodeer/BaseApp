@@ -102,9 +102,11 @@ dependencies {
     // Popup框架 https://github.com/razerdp/BasePopup
     api 'io.github.razerdp:BasePopup:3.2.0'
     //标签布局 https://github.com/LuckyCodeer/TagLayout
-    api'com.yhw.library:taglayout:1.0.1'
+    api 'com.yhw.library:taglayout:1.0.1'
     //日期时间选择
     api 'com.github.LuckyCodeer.Android-PickerView:pickerview:4.2.5'
-    //图片选择
-    api 'com.github.Silence0928:Matisse:0.5.4'
+    // 图片选择 https://github.com/LuckSiege/PictureSelector/blob/version_component/README_CN.md
+    implementation 'io.github.lucksiege:pictureselector:v3.10.7'
+    // 图片压缩
+    implementation 'io.github.lucksiege:compress:v3.10.7'
 }
