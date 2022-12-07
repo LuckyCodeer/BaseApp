@@ -1,8 +1,5 @@
 package com.huodada;
 
-import android.content.Intent;
-
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.hjq.permissions.Permission;
@@ -133,16 +130,4 @@ public class MainActivity extends BaseDataBindingActivity<ActivityMainBinding> {
         });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 100) {
-            if (data == null) {
-                return;
-            }
-            //图片选择地址
-//            List<String> list = Matisse.obtainPathResult(data);
-//            ToastUtils.showLong(list.toString());
-        }
-    }
 }
