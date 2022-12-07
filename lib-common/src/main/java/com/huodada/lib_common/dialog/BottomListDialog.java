@@ -14,7 +14,7 @@ import com.huodada.lib_common.databinding.BottomListDialogLayoutBinding;
 import java.util.List;
 
 /**
- * 底部弹出列表选择框
+ * 底部弹出列表选择框-适用于数据较多的场景
  * created by yhw
  * date 2022/12/6
  */

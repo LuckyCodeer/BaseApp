@@ -4,14 +4,17 @@ import android.content.Intent;
 
 import androidx.annotation.Nullable;
 
+import com.hjq.permissions.Permission;
 import com.hjq.toast.ToastUtils;
 import com.huodada.databinding.ActivityMainBinding;
 import com.huodada.lib_common.base.BaseDataBindingActivity;
+import com.huodada.lib_common.dialog.BottomActionDialog;
 import com.huodada.lib_common.dialog.BottomListDialog;
 import com.huodada.lib_common.dialog.CommonAlertDialog;
 import com.huodada.lib_common.dialog.DateSelectDialog;
 import com.huodada.lib_common.router.RouterUtils;
 import com.huodada.lib_common.utils.ImagePickerUtils;
+import com.huodada.lib_common.utils.PermissionUtil;
 import com.zhihu.matisse.Matisse;
 
 import java.util.ArrayList;
@@ -55,7 +58,11 @@ public class MainActivity extends BaseDataBindingActivity<ActivityMainBinding> {
 
         //选择图片
         mDataBinding.btnSelectPic.setOnClickListener(view -> {
-            ImagePickerUtils.openGallery(this, 100, 10);
+            //申请权限
+            PermissionUtil.requestPermission(this, new String[]{Permission.CAMERA, Permission.WRITE_EXTERNAL_STORAGE},
+                    () -> {
+                        ImagePickerUtils.openGallery(this, 100, 10);
+                    });
         });
 
         //对话框
@@ -66,7 +73,7 @@ public class MainActivity extends BaseDataBindingActivity<ActivityMainBinding> {
                     }).show();
         });
 
-        //底部选择对话框
+        //底部选择对话框1
         mDataBinding.btnSelectDialog.setOnClickListener(view -> {
             List<String> items = new ArrayList<>();
             items.add("红色");
@@ -79,6 +86,17 @@ public class MainActivity extends BaseDataBindingActivity<ActivityMainBinding> {
                         ToastUtils.show(name);
                     })
                     .show();
+        });
+
+        //底部选择对话框2
+        mDataBinding.btnSelectDialog2.setOnClickListener(view -> {
+            List<String> items = new ArrayList<>();
+            items.add("拍照");
+            items.add("相册");
+            new BottomActionDialog(this).setItems(items)
+                    .setOnConfirmSelectListener((position, name) -> {
+                        ToastUtils.show(name);
+                    }).show();
         });
     }
 

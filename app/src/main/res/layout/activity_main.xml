@@ -55,7 +55,13 @@
             android:id="@+id/btn_select_dialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="底部选择对话框" />
+            android:text="底部选择对话框1"/>
+
+        <Button
+            android:id="@+id/btn_select_dialog2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="底部选择对话框2"/>
 
     </LinearLayout>
 </layout>
