@@ -74,6 +74,7 @@ dependencies {
         exclude group: 'androidx.recyclerview'
     })
     api 'androidx.recyclerview:recyclerview:1.2.1'
+    //图片加载框架
     api 'com.github.bumptech.glide:glide:4.14.2'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.14.2'
     // 权限请求框架：https://github.com/getActivity/XXPermissions

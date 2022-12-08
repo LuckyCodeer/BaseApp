@@ -43,9 +43,9 @@ public class ActionBar extends RelativeLayout {
     /**
      * 字体大小
      */
-    private int lefTextSize = 16;
+    private int lefTextSize = 14;
     private int centerTextSize = 18;
-    private int rightTextSize = 16;
+    private int rightTextSize = 14;
 
 
     public ActionBar(Context context) {
