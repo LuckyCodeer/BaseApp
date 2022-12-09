@@ -17,7 +17,7 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 public class MyApplication extends BaseApplication {
     private static final String TAG = "MyApplication";
 
-    private final ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(5);
+    private final ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(3);
 
     private final Thread.UncaughtExceptionHandler exceptionHandler = (thread, throwable) -> {
         Log.i(TAG, "throwable==>" + throwable);
