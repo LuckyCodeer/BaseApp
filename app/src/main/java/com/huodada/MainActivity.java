@@ -10,6 +10,7 @@ import com.huodada.lib_common.dialog.BottomActionDialog;
 import com.huodada.lib_common.dialog.BottomListDialog;
 import com.huodada.lib_common.dialog.CommonAlertDialog;
 import com.huodada.lib_common.dialog.DateSelectDialog;
+import com.huodada.lib_common.entity.Friend;
 import com.huodada.lib_common.router.RouterUtils;
 import com.huodada.lib_common.utils.ImageUtils;
 import com.huodada.lib_common.utils.PermissionUtil;
@@ -127,6 +128,12 @@ public class MainActivity extends BaseDataBindingActivity<ActivityMainBinding> {
         //Toast提示
         mDataBinding.btnToast.setOnClickListener(view -> {
             ToastUtils.show("这是一个Toast提示");
+        });
+
+        //异常捕获
+        mDataBinding.btnException.setOnClickListener(view -> {
+            Friend friend = null;
+            ToastUtils.show(friend.getName());
         });
     }
 

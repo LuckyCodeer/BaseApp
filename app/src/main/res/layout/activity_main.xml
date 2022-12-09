@@ -81,6 +81,13 @@
                 android:textAllCaps="false"
                 android:text="Toast提示" />
 
+            <Button
+                android:id="@+id/btn_exception"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:text="全局异常捕获" />
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </layout>
