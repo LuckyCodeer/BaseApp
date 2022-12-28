@@ -28,6 +28,15 @@ public class MainActivity extends BaseDataBindingActivity<ActivityMainBinding> {
         super.initView();
         setTitle(R.string.app_name);
         hideActionBarBack();
+        setNotificationBar();
+    }
+
+    private void setNotificationBar() {
+        List<String> items = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            items.add("这是一条长文本长文本长文本长文本长文本长文本横幅通知显示" + i);
+        }
+        mDataBinding.notificationBar.setData(items);
     }
 
     @Override

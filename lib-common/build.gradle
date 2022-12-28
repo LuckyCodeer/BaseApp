@@ -110,4 +110,8 @@ dependencies {
     implementation 'io.github.lucksiege:pictureselector:v3.10.7'
     // 图片压缩
     implementation 'io.github.lucksiege:compress:v3.10.7'
+    // 滚动文本
+    api 'com.github.xiaweizi:MarqueeTextView:1.0'
+    // banner
+    api 'io.github.youth5201314:banner:2.2.2'
 }

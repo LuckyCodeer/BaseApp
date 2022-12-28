@@ -19,6 +19,11 @@
             android:padding="20dp"
             tools:context=".MainActivity">
 
+            <com.huodada.lib_common.view.widget.NotificationBar
+                android:id="@+id/notification_bar"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"/>
+
             <Button
                 android:id="@+id/btn_demo"
                 android:layout_width="wrap_content"
@@ -78,15 +83,15 @@
                 android:id="@+id/btn_toast"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAllCaps="false"
-                android:text="Toast提示" />
+                android:text="Toast提示"
+                android:textAllCaps="false" />
 
             <Button
                 android:id="@+id/btn_exception"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAllCaps="false"
-                android:text="全局异常捕获" />
+                android:text="全局异常捕获"
+                android:textAllCaps="false" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
