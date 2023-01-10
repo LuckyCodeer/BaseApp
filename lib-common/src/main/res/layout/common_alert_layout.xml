@@ -31,18 +31,14 @@
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/activity_bg" />
-
             <TextView
                 android:id="@+id/tv_msg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:paddingHorizontal="12dp"
-                android:paddingVertical="20dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="20dp"
                 android:textColor="@color/black_333333"
                 android:textSize="15sp" />
 

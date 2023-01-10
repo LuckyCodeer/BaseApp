@@ -66,12 +66,6 @@
 
             </LinearLayout>
 
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/activity_bg" />
-
             <com.contrarywind.view.WheelView
                 android:id="@+id/wheel_view"
                 android:layout_width="match_parent"
