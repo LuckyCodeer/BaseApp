@@ -121,6 +121,7 @@ public class TabButtonLayout extends LinearLayout {
         if (view != null) {
             if (mObjectAnimator != null) {
                 mObjectAnimator.cancel();
+                mObjectAnimator = null;
             }
             mObjectAnimator = ObjectAnimator.ofFloat(mSliderView, "translationX", view.getX());
             mObjectAnimator.setDuration(200);
@@ -148,6 +149,9 @@ public class TabButtonLayout extends LinearLayout {
      * @param selectedPosition 索引
      */
     public void setSelectedPosition(int selectedPosition) {
+        if (this.mSelectedPosition == selectedPosition) {
+            return;
+        }
         this.mSelectedPosition = selectedPosition;
         post(() -> changeButtonState(selectedPosition, (TextView) mLlContent.getChildAt(selectedPosition)));
     }
