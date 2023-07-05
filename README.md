@@ -23,7 +23,7 @@ Toast框架：ToastUtils.showToast("提示");
 ## 事件通信框架：Eventbus
 
 ## 列表框架：SmartRefreshLayout + BaseRecyclerViewAdapterHelper
-将这两个框架相结合封装了 com.huodada.lib_common.view.layout.BaseSmartRefreshLayout 列表布局，实现了自动显示空布局和分页判断，减少模板代码
+将这两个框架相结合封装了 com.lib_common.view.layout.BaseSmartRefreshLayout 列表布局，实现了自动显示空布局和分页判断，减少模板代码
 
 ## JSON解析框架：Fastjson
 

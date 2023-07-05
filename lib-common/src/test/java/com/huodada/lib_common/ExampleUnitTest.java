@@ -1,4 +1,4 @@
-package com.huodada.lib_common;
+package com.lib_common;
 
 import org.junit.Test;
 

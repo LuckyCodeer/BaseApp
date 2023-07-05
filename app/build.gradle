@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.huodada'
+    namespace 'com.app'
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.huodada"
+        applicationId "com.app"
         minSdk 21
         targetSdk 32
         versionCode 1

@@ -1,4 +1,4 @@
-package com.huodada.lib_src;
+package com.lib_src;
 
 import org.junit.Test;
 

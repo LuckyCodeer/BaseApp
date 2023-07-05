@@ -5,7 +5,7 @@
 
         <variable
             name="friend"
-            type="com.huodada.lib_common.entity.Friend" />
+            type="com.lib_common.entity.Friend" />
     </data>
 
     <LinearLayout

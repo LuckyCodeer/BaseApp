@@ -1,4 +1,4 @@
-package com.huodada;
+package com.app;
 
 import org.junit.Test;
 

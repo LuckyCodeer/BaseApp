@@ -17,9 +17,9 @@
             android:gravity="center"
             android:orientation="vertical"
             android:padding="20dp"
-            tools:context=".MainActivity">
+            tools:context="com.app.MainActivity">
 
-            <com.huodada.lib_common.view.widget.NotificationBar
+            <com.lib_common.view.widget.NotificationBar
                 android:id="@+id/notification_bar"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"/>
@@ -85,6 +85,14 @@
                 android:layout_height="wrap_content"
                 android:text="Toast提示"
                 android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btn_form"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="form表单"
+                android:textAllCaps="false"
+                android:visibility="gone"/>
 
             <Button
                 android:id="@+id/btn_exception"

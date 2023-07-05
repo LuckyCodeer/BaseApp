@@ -1,4 +1,4 @@
-package com.huodada.lib_src;
+package com.lib_src;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.huodada.lib_src.test", appContext.getPackageName());
+        assertEquals("com.lib_src.test", appContext.getPackageName());
     }
 }

@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace 'com.huodada.lib_src'
+    namespace 'com.lib_src'
     compileSdk 32
 
     defaultConfig {

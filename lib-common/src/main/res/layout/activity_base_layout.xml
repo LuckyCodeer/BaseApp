@@ -7,7 +7,7 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <com.huodada.lib_common.view.layout.ActionBar
+    <com.lib_common.view.layout.ActionBar
         android:id="@+id/actionbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/action_bar_height"

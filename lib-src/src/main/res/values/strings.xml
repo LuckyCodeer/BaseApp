@@ -7,4 +7,6 @@
     <string name="empty_data_text">暂无数据</string>
     <string name="loading">加载中…</string>
     <string name="please_select">请选择</string>
+    <string name="app_upgrade_title">升级</string>
+    <string name="app_upgrade_confirm">立即升级</string>
 </resources>
