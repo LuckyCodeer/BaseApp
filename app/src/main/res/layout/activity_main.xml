@@ -101,6 +101,14 @@
                 android:text="全局异常捕获"
                 android:textAllCaps="false" />
 
+
+            <Button
+                android:id="@+id/btn_speech"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="语音播报"
+                android:textAllCaps="false" />
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </layout>

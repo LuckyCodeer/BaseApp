@@ -1,13 +1,15 @@
 package com.app;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatDelegate;
 
+import com.app.databinding.ActivityMainBinding;
 import com.hjq.permissions.Permission;
 import com.hjq.toast.ToastUtils;
-import com.app.R;
-import com.app.databinding.ActivityMainBinding;
 import com.lib_common.base.BaseDataBindingActivity;
 import com.lib_common.dialog.BottomActionDialog;
 import com.lib_common.dialog.BottomListDialog;
@@ -20,11 +22,14 @@ import com.lib_common.utils.PermissionUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * 主界面
  */
 public class MainActivity extends BaseDataBindingActivity<ActivityMainBinding> {
+    private static final String TAG = "MainActivity";
+    private TextToSpeech textToSpeech;
 
     @Override
     protected void initView() {
@@ -152,6 +157,56 @@ public class MainActivity extends BaseDataBindingActivity<ActivityMainBinding> {
             Friend friend = null;
             ToastUtils.show(friend.getName());
         });
+
+        //语音播报
+        mDataBinding.btnSpeech.setOnClickListener(view -> {
+            final String text = "支付宝到账1000000元，支付宝到账1000000元，支付宝到账1000000元";
+            if (textToSpeech != null) {
+                textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, new Bundle(), null);
+                return;
+            }
+            textToSpeech = new TextToSpeech(this, status -> {
+                Log.e(TAG, "onInit===> " + status);
+                if (status == TextToSpeech.SUCCESS) {
+                    // TTS引擎初始化成功
+                    Locale language = Locale.getDefault(); // 获取当前系统语言
+                    int result = textToSpeech.setLanguage(language); // 设置TTS引擎语言
+                    if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                        // 不支持当前语言
+                        Log.e(TAG, "Language not supported");
+                        ToastUtils.show("不支持当前语言");
+                    } else {
+                        // TTS引擎初始化成功，可以进行后续操作
+                        Log.i(TAG, "TTS engine initialized");
+                        textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, new Bundle(), null);
+                    }
+                } else {
+                    // TTS引擎初始化失败
+                    Log.e(TAG, "TTS engine initialization failed");
+                    ToastUtils.show("TTS引擎初始化失败");
+                }
+            });
+            // 设置音量(值越大声音越尖(女生)，值越小则变成男声，1.0是常规)
+            textToSpeech.setPitch(1f);
+            // 设置语速
+            textToSpeech.setSpeechRate(1.0f);
+            // 设置需要播报的语言
+//            textToSpeech.setLanguage(Locale.getDefault());
+            // 设置需要播报的语句(若设备不支持则不会读出来)
+            /**
+             * TextToSpeech.QUEUE_FLUSH：中断当时的播报，播报新的语音
+             * TextToSpeech.QUEUE_ADD：添加到当前任务之后
+             */
+//            textToSpeech.speak("中午吃饭了吗", TextToSpeech.QUEUE_FLUSH, null);
+        });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (textToSpeech != null) {
+            textToSpeech.stop();
+            textToSpeech.shutdown();
+        }
+    }
 }
