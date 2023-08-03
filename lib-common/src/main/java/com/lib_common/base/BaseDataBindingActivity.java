@@ -29,6 +29,7 @@ public abstract class BaseDataBindingActivity<DB extends ViewDataBinding> extend
         } else {
             mDataBinding = DataBindingUtil.setContentView(this, getLayoutId());
         }
+        mDataBinding.setLifecycleOwner(this);
         initView();
         onViewEvent();
         initSoftKeyboard();

@@ -199,6 +199,11 @@ public class MainActivity extends BaseDataBindingActivity<ActivityMainBinding> {
              */
 //            textToSpeech.speak("中午吃饭了吗", TextToSpeech.QUEUE_FLUSH, null);
         });
+
+        //数据双向绑定
+        mDataBinding.btnDataBinding.setOnClickListener(v -> {
+            startActivity(new Intent(this, DataBindingDemoActivity.class));
+        });
     }
 
     @Override
