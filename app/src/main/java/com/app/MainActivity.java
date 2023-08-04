@@ -8,9 +8,11 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.app.databinding.ActivityMainBinding;
+import com.app.mvvm.DataBindingDemoActivity;
 import com.hjq.permissions.Permission;
 import com.hjq.toast.ToastUtils;
-import com.lib_common.base.BaseDataBindingActivity;
+import com.lib_common.base.mvvm.BaseDataBindingActivity;
+import com.lib_common.base.mvvm.BaseViewModel;
 import com.lib_common.dialog.BottomActionDialog;
 import com.lib_common.dialog.BottomListDialog;
 import com.lib_common.dialog.CommonAlertDialog;
@@ -27,7 +29,7 @@ import java.util.Locale;
 /**
  * 主界面
  */
-public class MainActivity extends BaseDataBindingActivity<ActivityMainBinding> {
+public class MainActivity extends BaseDataBindingActivity<ActivityMainBinding, BaseViewModel> {
     private static final String TAG = "MainActivity";
     private TextToSpeech textToSpeech;
 
@@ -147,11 +149,6 @@ public class MainActivity extends BaseDataBindingActivity<ActivityMainBinding> {
             ToastUtils.show("这是一个Toast提示");
         });
 
-        //form表单
-        mDataBinding.btnForm.setOnClickListener(view -> {
-            startActivity(new Intent(this, FormActivity.class));
-        });
-
         //异常捕获
         mDataBinding.btnException.setOnClickListener(view -> {
             Friend friend = null;
@@ -213,5 +210,15 @@ public class MainActivity extends BaseDataBindingActivity<ActivityMainBinding> {
             textToSpeech.stop();
             textToSpeech.shutdown();
         }
+    }
+
+    @Override
+    protected Class<BaseViewModel> getViewModel() {
+        return null;
+    }
+
+    @Override
+    protected int getVariableId() {
+        return 0;
     }
 }

@@ -1,23 +1,23 @@
 package com.app.mvvm;
 
-import android.content.Context;
+import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.app.bean.Account;
-import com.lib_common.dialog.LoadingDialog;
+import com.lib_common.base.mvvm.BaseViewModel;
 
 /**
  * created by yhw
  * date 2023/8/3
  */
-public class DemoViewModel extends ViewModel {
+public class DemoViewModel extends BaseViewModel {
     private final MutableLiveData<Account> mAccount = new MutableLiveData<>();
 
-    public void getData(Context context) {
-        LoadingDialog loadingDialog = new LoadingDialog(context);
-        loadingDialog.showDialog();
+    public void getData() {
+        showLoading();
         new Thread(() -> {
             try {
                 Thread.sleep(3000);
@@ -26,7 +26,7 @@ public class DemoViewModel extends ViewModel {
             }
             Account account = new Account("账户名" + Math.random());
             mAccount.postValue(account);
-            loadingDialog.dismissDialog();
+            dismissLoading();
         }).start();
     }
 
@@ -34,4 +34,21 @@ public class DemoViewModel extends ViewModel {
         return mAccount;
     }
 
+    @Override
+    public void onCreate(@NonNull LifecycleOwner owner) {
+        super.onCreate(owner);
+        Log.i("TAG", "=============onCreate=============");
+    }
+
+    @Override
+    public void onStop(@NonNull LifecycleOwner owner) {
+        super.onStop(owner);
+        Log.i("TAG", "=============onStop=============");
+    }
+
+    @Override
+    public void onDestroy(@NonNull LifecycleOwner owner) {
+        super.onDestroy(owner);
+        Log.i("TAG", "=============onDestroy=============");
+    }
 }

@@ -1,17 +1,22 @@
-package com.app;
+package com.app.mvvm;
 
+import android.util.Log;
+
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.app.BR;
+import com.app.R;
 import com.app.bean.Book;
 import com.app.bean.User;
 import com.app.databinding.ActivityDataBindingDemoBinding;
 import com.app.mvvm.DemoViewModel;
-import com.lib_common.base.BaseDataBindingActivity;
+import com.lib_common.base.mvvm.BaseDataBindingActivity;
+import com.lib_common.base.mvvm.BaseViewModel;
 
-public class DataBindingDemoActivity extends BaseDataBindingActivity<ActivityDataBindingDemoBinding> {
+public class DataBindingDemoActivity extends BaseDataBindingActivity<ActivityDataBindingDemoBinding, DemoViewModel> {
     private final Book mBook = new Book();
     private final User mUser = new User();
-    private DemoViewModel mDemoViewModel;
 
     @Override
     protected void onViewEvent() {
@@ -21,7 +26,7 @@ public class DataBindingDemoActivity extends BaseDataBindingActivity<ActivityDat
 //            mBook.getBookName().set("红楼梦");
 
 
-            mDemoViewModel.getData(this);
+            mViewModel.getData();
         });
     }
 
@@ -40,8 +45,15 @@ public class DataBindingDemoActivity extends BaseDataBindingActivity<ActivityDat
 //        mBook.setBookName(new ObservableField<>("西游记"));
 //        mDataBinding.setBook(mBook);
 
+    }
 
-        mDemoViewModel = new ViewModelProvider(this).get(DemoViewModel.class);
-        mDataBinding.setViewModel(mDemoViewModel);
+    @Override
+    protected Class<DemoViewModel> getViewModel() {
+        return DemoViewModel.class;
+    }
+
+    @Override
+    protected int getVariableId() {
+        return BR.viewModel;
     }
 }

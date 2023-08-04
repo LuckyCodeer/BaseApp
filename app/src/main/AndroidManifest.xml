@@ -24,10 +24,7 @@
             android:name=".mvvm.TestActivity"
             android:exported="false" />
         <activity
-            android:name=".DataBindingDemoActivity"
-            android:exported="false" />
-        <activity
-            android:name=".FormActivity"
+            android:name=".mvvm.DataBindingDemoActivity"
             android:exported="false" />
 
         <meta-data

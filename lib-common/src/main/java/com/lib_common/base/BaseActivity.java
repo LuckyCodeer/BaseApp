@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.lib_common.R;
+import com.lib_common.base.mvvm.BaseDataBindingActivity;
 import com.lib_common.dialog.LoadingDialog;
 import com.lib_common.view.layout.ActionBar;
 

@@ -26,7 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".DataBindingDemoActivity">
+        tools:context=".mvvm.DataBindingDemoActivity">
 
         <TextView
             android:id="@+id/tv_name"
