@@ -11,13 +11,17 @@ import androidx.lifecycle.ViewModelProvider;
 import com.lib_common.R;
 import com.lib_common.base.BaseActivity;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+
 /**
- * DataBinding Activity
- * DB类 需要build后自动生成，名字和布局文件名字有关
+ * MVVM基类Activity
+ * @param <DB> 需要build后自动生成，名字和布局文件名字有关
+ * @param <VM> ViewModel
  * created by yhw
  * date 2022/11/9
  */
-public abstract class BaseDataBindingActivity<DB extends ViewDataBinding, VM extends BaseViewModel> extends BaseActivity {
+public abstract class BaseMvvmActivity<DB extends ViewDataBinding, VM extends BaseViewModel> extends BaseActivity {
     protected DB mDataBinding; //DataBinding对象，可直接进行布局ID获取
     protected VM mViewModel;
 
@@ -34,22 +38,22 @@ public abstract class BaseDataBindingActivity<DB extends ViewDataBinding, VM ext
         }
         mDataBinding.setLifecycleOwner(this);
         if (getViewModel() != null) {
-            mViewModel = new ViewModelProvider(this).get(getViewModel());
+            mViewModel = getViewModel();
             getLifecycle().addObserver(mViewModel); //注册ViewModel生命周期
             if (getVariableId() != 0) {
                 mDataBinding.setVariable(getVariableId(), mViewModel);
             }
         }
         initView();
-        registerLiveData();
+        observeDataChange();
         onViewEvent();
         initSoftKeyboard();
     }
 
     /**
-     * 注册LiveData数据改变监听
+     * 观察数据变化，更新UI
      */
-    private void registerLiveData() {
+    protected void observeDataChange() {
         if (mViewModel != null) {
             mViewModel.getShowLoading().observe(this, aBoolean -> {
                 if (aBoolean) {
@@ -71,7 +75,16 @@ public abstract class BaseDataBindingActivity<DB extends ViewDataBinding, VM ext
     /**
      * 获取ViewModel
      */
-    protected abstract Class<VM> getViewModel();
+    protected VM getViewModel() {
+        //这里获得到的是类的泛型的类型
+        final Type type = getClass().getGenericSuperclass();
+        if (type instanceof ParameterizedType) {
+            final Type[] actualTypeArguments = ((ParameterizedType) type).getActualTypeArguments();
+            Type t = actualTypeArguments[1];
+            return new ViewModelProvider(this).get((Class<VM>) t);
+        }
+        return null;
+    }
 
     /**
      * 获取布局里的variable的name

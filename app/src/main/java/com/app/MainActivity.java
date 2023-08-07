@@ -8,10 +8,10 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.app.databinding.ActivityMainBinding;
-import com.app.mvvm.DataBindingDemoActivity;
+import com.app.mvvm.MvvmDemoActivity;
 import com.hjq.permissions.Permission;
 import com.hjq.toast.ToastUtils;
-import com.lib_common.base.mvvm.BaseDataBindingActivity;
+import com.lib_common.base.mvvm.BaseMvvmActivity;
 import com.lib_common.base.mvvm.BaseViewModel;
 import com.lib_common.dialog.BottomActionDialog;
 import com.lib_common.dialog.BottomListDialog;
@@ -29,7 +29,7 @@ import java.util.Locale;
 /**
  * 主界面
  */
-public class MainActivity extends BaseDataBindingActivity<ActivityMainBinding, BaseViewModel> {
+public class MainActivity extends BaseMvvmActivity<ActivityMainBinding, BaseViewModel> {
     private static final String TAG = "MainActivity";
     private TextToSpeech textToSpeech;
 
@@ -199,7 +199,7 @@ public class MainActivity extends BaseDataBindingActivity<ActivityMainBinding, B
 
         //数据双向绑定
         mDataBinding.btnDataBinding.setOnClickListener(v -> {
-            startActivity(new Intent(this, DataBindingDemoActivity.class));
+            startActivity(new Intent(this, MvvmDemoActivity.class));
         });
     }
 
@@ -210,11 +210,6 @@ public class MainActivity extends BaseDataBindingActivity<ActivityMainBinding, B
             textToSpeech.stop();
             textToSpeech.shutdown();
         }
-    }
-
-    @Override
-    protected Class<BaseViewModel> getViewModel() {
-        return null;
     }
 
     @Override

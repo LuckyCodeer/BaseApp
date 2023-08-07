@@ -7,9 +7,9 @@ import com.app.R;
 import com.app.bean.Book;
 import com.app.bean.User;
 import com.app.databinding.ActivityDataBindingDemoBinding;
-import com.lib_common.base.mvvm.BaseDataBindingActivity;
+import com.lib_common.base.mvvm.BaseMvvmActivity;
 
-public class DataBindingDemoActivity extends BaseDataBindingActivity<ActivityDataBindingDemoBinding, DemoViewModel> {
+public class MvvmDemoActivity extends BaseMvvmActivity<ActivityDataBindingDemoBinding, DemoViewModel> {
     private final Book mBook = new Book();
     private final User mUser = new User();
 
@@ -22,7 +22,11 @@ public class DataBindingDemoActivity extends BaseDataBindingActivity<ActivityDat
 
 //            mViewModel.getData();
         });
+    }
 
+    @Override
+    protected void observeDataChange() {
+        super.observeDataChange();
         mViewModel.getCountDown().observe(this, aLong -> {
             Log.i("TAG", "====================" + aLong);
             mDataBinding.btnVerify.setEnabled(aLong <= 0);
@@ -49,11 +53,6 @@ public class DataBindingDemoActivity extends BaseDataBindingActivity<ActivityDat
 //        mBook.setBookName(new ObservableField<>("西游记"));
 //        mDataBinding.setBook(mBook);
 
-    }
-
-    @Override
-    protected Class<DemoViewModel> getViewModel() {
-        return DemoViewModel.class;
     }
 
     @Override

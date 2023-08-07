@@ -9,7 +9,7 @@ import com.app.databinding.DemoItemLayoutBinding;
 import com.chad.library.adapter.base.viewholder.DataBindingHolder;
 import com.hjq.toast.ToastUtils;
 import com.lib_common.adapter.CommonAdapter;
-import com.lib_common.base.mvvm.BaseDataBindingActivity;
+import com.lib_common.base.mvvm.BaseMvvmActivity;
 import com.lib_common.base.mvvm.BaseViewModel;
 import com.lib_common.entity.Friend;
 import com.lib_common.http.HttpListener;
@@ -25,7 +25,7 @@ import java.util.List;
  * Demo
  */
 @Route(path = RouterPath.DEMO_ACTIVITY)
-public class ListDemoActivity extends BaseDataBindingActivity<ActivityDemoBinding, BaseViewModel> {
+public class ListDemoActivity extends BaseMvvmActivity<ActivityDemoBinding, BaseViewModel> {
     private int pageNum = 1;
 
     @Override
@@ -126,11 +126,6 @@ public class ListDemoActivity extends BaseDataBindingActivity<ActivityDemoBindin
         public int getItemLayoutId(int viewType) {
             return R.layout.demo_item_layout;
         }
-    }
-
-    @Override
-    protected Class<BaseViewModel> getViewModel() {
-        return null;
     }
 
     @Override

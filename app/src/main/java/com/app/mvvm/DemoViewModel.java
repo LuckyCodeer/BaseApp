@@ -1,7 +1,6 @@
 package com.app.mvvm;
 
 import android.app.Application;
-import android.content.Context;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.Log;
@@ -13,11 +12,6 @@ import androidx.lifecycle.MutableLiveData;
 import com.app.bean.Account;
 import com.hjq.toast.ToastUtils;
 import com.lib_common.base.mvvm.BaseViewModel;
-import com.lib_common.entity.Friend;
-import com.lib_common.http.HttpListener;
-import com.lib_common.http.HttpUtils;
-
-import java.util.List;
 
 /**
  * created by yhw

@@ -2,15 +2,15 @@ package com.app;
 
 import android.view.View;
 
-import com.app.R;
 import com.app.databinding.FragmentDemoLayoutBinding;
-import com.lib_common.base.fragment.BaseDataBindingFragment;
+import com.lib_common.base.fragment.BaseMvvmFragment;
+import com.lib_common.base.mvvm.BaseViewModel;
 
 /**
  * created by yhw
  * date 2022/11/10
  */
-public class DemoFragment extends BaseDataBindingFragment<FragmentDemoLayoutBinding> {
+public class DemoFragment extends BaseMvvmFragment<FragmentDemoLayoutBinding, BaseViewModel> {
 
     @Override
     protected void initView(View rootView) {
@@ -26,4 +26,8 @@ public class DemoFragment extends BaseDataBindingFragment<FragmentDemoLayoutBind
         return R.layout.fragment_demo_layout;
     }
 
+    @Override
+    protected int getVariableId() {
+        return 0;
+    }
 }

@@ -24,7 +24,7 @@
             android:name=".mvvm.TestActivity"
             android:exported="false" />
         <activity
-            android:name=".mvvm.DataBindingDemoActivity"
+            android:name=".mvvm.MvvmDemoActivity"
             android:exported="false" />
 
         <meta-data

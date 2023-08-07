@@ -7,7 +7,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.lib_common.R;
-import com.lib_common.base.mvvm.BaseDataBindingActivity;
+import com.lib_common.base.mvvm.BaseMvvmActivity;
 import com.lib_common.base.mvvm.BaseViewModel;
 import com.lib_common.databinding.ActivityWebBinding;
 import com.lib_common.router.RouterPath;
@@ -18,7 +18,7 @@ import com.just.agentweb.MiddlewareWebChromeBase;
  * 浏览器
  */
 @Route(path = RouterPath.WEB_ACTIVITY)
-public class WebActivity extends BaseDataBindingActivity<ActivityWebBinding, BaseViewModel> {
+public class WebActivity extends BaseMvvmActivity<ActivityWebBinding, BaseViewModel> {
     @Autowired
     String url; //地址
     private AgentWeb mAgentWeb;
@@ -67,11 +67,6 @@ public class WebActivity extends BaseDataBindingActivity<ActivityWebBinding, Bas
             mAgentWeb.destroy();
             mAgentWeb = null;
         }
-    }
-
-    @Override
-    protected Class<BaseViewModel> getViewModel() {
-        return null;
     }
 
     @Override

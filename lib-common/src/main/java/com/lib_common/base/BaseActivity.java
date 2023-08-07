@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.lib_common.R;
-import com.lib_common.base.mvvm.BaseDataBindingActivity;
+import com.lib_common.base.mvvm.BaseMvvmActivity;
 import com.lib_common.dialog.LoadingDialog;
 import com.lib_common.view.layout.ActionBar;
 
@@ -20,7 +20,7 @@ import org.greenrobot.eventbus.EventBus;
 
 /**
  * 基类Activity 其它Activity继承此Activity
- * 推荐继承 {@link BaseDataBindingActivity}
+ * 推荐继承 {@link BaseMvvmActivity}
  * created by yhw
  * date 2022/11/9
  */
