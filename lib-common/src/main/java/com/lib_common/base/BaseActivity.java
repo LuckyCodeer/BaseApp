@@ -115,10 +115,17 @@ public abstract class BaseActivity extends AppCompatActivity {
      * 显示加载框
      */
     public void showLoading() {
+        showLoading(null);
+    }
+
+    /**
+     * 显示加载框
+     */
+    public void showLoading(String msg) {
         if (mLoadingDialog == null) {
             mLoadingDialog = new LoadingDialog(this);
         }
-        mLoadingDialog.showDialog();
+        mLoadingDialog.showDialog(msg);
     }
 
     /**

@@ -2,17 +2,12 @@ package com.app.mvvm;
 
 import android.util.Log;
 
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
 import com.app.BR;
 import com.app.R;
 import com.app.bean.Book;
 import com.app.bean.User;
 import com.app.databinding.ActivityDataBindingDemoBinding;
-import com.app.mvvm.DemoViewModel;
 import com.lib_common.base.mvvm.BaseDataBindingActivity;
-import com.lib_common.base.mvvm.BaseViewModel;
 
 public class DataBindingDemoActivity extends BaseDataBindingActivity<ActivityDataBindingDemoBinding, DemoViewModel> {
     private final Book mBook = new Book();
@@ -25,8 +20,17 @@ public class DataBindingDemoActivity extends BaseDataBindingActivity<ActivityDat
 
 //            mBook.getBookName().set("红楼梦");
 
+//            mViewModel.getData();
+        });
 
-            mViewModel.getData();
+        mViewModel.getCountDown().observe(this, aLong -> {
+            Log.i("TAG", "====================" + aLong);
+            mDataBinding.btnVerify.setEnabled(aLong <= 0);
+            if (aLong > 0) {
+                mDataBinding.btnVerify.setText(aLong + "s后重新获取");
+            } else {
+                mDataBinding.btnVerify.setText("重新获取");
+            }
         });
     }
 

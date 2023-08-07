@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -25,8 +23,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".mvvm.DataBindingDemoActivity">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_name"
@@ -34,7 +31,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="20dp"
-            android:text="@{viewModel.account.accountName}"/>
+            android:text="@{viewModel.account.accountName}" />
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/et_value"
@@ -44,14 +41,24 @@
             android:gravity="center"
             android:hint="请输入"
             android:maxLines="1"
-            android:text="@{book.bookName}"/>
+            android:text="@{book.bookName}" />
 
         <Button
             android:id="@+id/btn_ok"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
+            android:onClick="@{()-> viewModel.getData()}"
             android:text="确定" />
+
+        <Button
+            android:id="@+id/btn_verify"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:onClick="@{()-> viewModel.getVerifyCode()}"
+            android:text="获取验证码"
+            android:textAllCaps="false" />
 
     </LinearLayout>
 </layout>

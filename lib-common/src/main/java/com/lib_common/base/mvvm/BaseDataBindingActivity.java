@@ -58,6 +58,8 @@ public abstract class BaseDataBindingActivity<DB extends ViewDataBinding, VM ext
                     dismissLoading();
                 }
             });
+
+            mViewModel.getLoadingMsg().observe(this, this::showLoading);
         }
     }
 
