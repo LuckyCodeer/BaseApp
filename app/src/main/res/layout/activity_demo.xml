@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context="com.app.ListDemoActivity">
+        tools:context="com.app.mvvm.list.ListDemoActivity">
 
         <com.lib_common.view.layout.BaseSmartRefreshLayout
             android:id="@+id/refresh_layout"

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -41,7 +42,23 @@
             android:gravity="center"
             android:hint="请输入"
             android:maxLines="1"
-            android:text="@{book.bookName}" />
+            android:text='@{book.bookName??"11"}' />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/et_value1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:gravity="center"
+            android:hint="请输入"
+            android:maxLines="1"
+            android:text='@{etValue.text}' />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_margin="20dp"
+            app:imageUrl="@{viewModel.account.headUrl}"/>
 
         <Button
             android:id="@+id/btn_ok"

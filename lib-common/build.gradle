@@ -4,11 +4,11 @@ plugins {
 
 android {
     namespace 'com.lib_common'
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         minSdk 21
-        targetSdk 32
+        targetSdk 33
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -114,4 +114,5 @@ dependencies {
     api 'com.github.xiaweizi:MarqueeTextView:1.0'
     // banner
     api 'io.github.youth5201314:banner:2.2.2'
+    api "androidx.work:work-runtime:2.8.0"
 }

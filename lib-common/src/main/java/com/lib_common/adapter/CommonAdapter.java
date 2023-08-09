@@ -33,6 +33,7 @@ public abstract class CommonAdapter<T, DB extends ViewDataBinding> extends BaseQ
     @Override
     protected void onBindViewHolder(@NonNull DataBindingHolder<DB> dataBindingHolder, int position, @Nullable T t) {
         onBindViewHolder(dataBindingHolder, dataBindingHolder.getBinding(), position, t);
+        dataBindingHolder.getBinding().executePendingBindings();
     }
 
     @NonNull

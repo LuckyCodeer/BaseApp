@@ -15,4 +15,8 @@ public class Api {
      * XX接口
      */
     public static String FRIEND = "friend/json";
+    /**
+     * 项目列表
+     */
+    public static String PROJECT_LIST = "project/list";
 }

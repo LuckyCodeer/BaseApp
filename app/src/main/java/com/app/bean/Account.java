@@ -7,6 +7,7 @@ package com.app.bean;
  */
 public class Account {
     private String accountName;
+    private String headUrl;
 
     public Account() {
     }
@@ -21,5 +22,13 @@ public class Account {
 
     public void setAccountName(String accountName) {
         this.accountName = accountName;
+    }
+
+    public String getHeadUrl() {
+        return headUrl;
+    }
+
+    public void setHeadUrl(String headUrl) {
+        this.headUrl = headUrl;
     }
 }
