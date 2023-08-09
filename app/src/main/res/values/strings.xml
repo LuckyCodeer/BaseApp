@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Demo</string>
+    <string name="total_amount">总计：%s元</string>
 </resources>

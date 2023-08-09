@@ -94,7 +94,7 @@ public class MainActivity extends BaseMvvmActivity<ActivityMainBinding, BaseView
         //选择图片
         mDataBinding.btnSelectPic.setOnClickListener(view -> {
             //申请权限
-            PermissionUtil.requestPermission(this, new String[]{Permission.CAMERA, Permission.WRITE_EXTERNAL_STORAGE},
+            PermissionUtil.requestPermission(this, new String[]{Permission.CAMERA, Permission.READ_MEDIA_IMAGES},
                     () -> {
                         ImageUtils.openGallery(this, 5, new ImageUtils.OnResultCallback() {
                             @Override

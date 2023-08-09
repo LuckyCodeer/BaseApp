@@ -20,6 +20,7 @@ import com.lib_common.base.mvvm.BaseViewModel;
 public class DemoViewModel extends BaseViewModel {
     private final MutableLiveData<Account> mAccount = new MutableLiveData<>();
     private final MutableLiveData<Long> mCountDown = new MutableLiveData<>();
+    private final MutableLiveData<Integer> mColorType = new MutableLiveData<>();
     private CountDownTimer mCountDownTimer;
     private final Handler mHandler = new Handler();
 
@@ -77,12 +78,20 @@ public class DemoViewModel extends BaseViewModel {
         }).start();
     }
 
+    public void changeColor() {
+        mColorType.postValue(mColorType.getValue() != null && 1 == mColorType.getValue() ? 0 : 1);
+    }
+
     public MutableLiveData<Account> getAccount() {
         return mAccount;
     }
 
     public MutableLiveData<Long> getCountDown() {
         return mCountDown;
+    }
+
+    public MutableLiveData<Integer> getColorType() {
+        return mColorType;
     }
 
     @Override

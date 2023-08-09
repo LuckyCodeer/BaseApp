@@ -1,22 +1,13 @@
 package com.app.mvvm;
 
-import android.os.AsyncTask;
 import android.util.Log;
-
-import androidx.work.ExistingPeriodicWorkPolicy;
-import androidx.work.OneTimeWorkRequest;
-import androidx.work.PeriodicWorkRequest;
-import androidx.work.WorkManager;
 
 import com.app.BR;
 import com.app.R;
 import com.app.bean.Book;
 import com.app.bean.User;
 import com.app.databinding.ActivityDataBindingDemoBinding;
-import com.app.workmanager.MyWorker;
 import com.lib_common.base.mvvm.BaseMvvmActivity;
-
-import java.util.concurrent.TimeUnit;
 
 public class MvvmDemoActivity extends BaseMvvmActivity<ActivityDataBindingDemoBinding, DemoViewModel> {
     private final Book mBook = new Book();
@@ -24,13 +15,13 @@ public class MvvmDemoActivity extends BaseMvvmActivity<ActivityDataBindingDemoBi
 
     @Override
     protected void onViewEvent() {
-        mDataBinding.btnOk.setOnClickListener(v -> {
-//            mUser.setName("刘备");
-
-//            mBook.getBookName().set("红楼梦");
-
-//            mViewModel.getData();
-        });
+//        mDataBinding.btnOk.setOnClickListener(v -> {
+////            mUser.setName("刘备");
+//
+////            mBook.getBookName().set("红楼梦");
+//
+////            mViewModel.getData();
+//        });
     }
 
     @Override
@@ -62,10 +53,6 @@ public class MvvmDemoActivity extends BaseMvvmActivity<ActivityDataBindingDemoBi
 //        mBook.setBookName(new ObservableField<>("西游记"));
 //        mDataBinding.setBook(mBook);
 
-        WorkManager.getInstance(this)
-                .enqueue(new PeriodicWorkRequest.Builder(MyWorker.class, 10L, TimeUnit.SECONDS).build());
-//                .beginWith(new OneTimeWorkRequest.Builder(MyWorker.class).build())
-//                .enqueue();
     }
 
     @Override

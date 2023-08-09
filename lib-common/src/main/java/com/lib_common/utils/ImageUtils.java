@@ -33,6 +33,7 @@ public class ImageUtils {
         PictureSelectorStyle pictureSelectorStyle = new PictureSelectorStyle();
         TitleBarStyle titleBarStyle = new TitleBarStyle();
         titleBarStyle.setTitleBackgroundColor(context.getResources().getColor(com.lib_src.R.color.main_color));
+        titleBarStyle.setHideTitleBar(true);
         pictureSelectorStyle.setTitleBarStyle(titleBarStyle);
         return pictureSelectorStyle;
     }

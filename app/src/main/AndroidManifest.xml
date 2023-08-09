@@ -21,9 +21,6 @@
         android:theme="@style/Theme.BaseApp"
         tools:targetApi="31">
         <activity
-            android:name=".mvvm.TestActivity"
-            android:exported="false" />
-        <activity
             android:name=".mvvm.MvvmDemoActivity"
             android:exported="false" />
 
