@@ -85,6 +85,12 @@
                 android:text="改变颜色"
                 android:textColor="@{viewModel.colorType==1?@color/main_color:@color/black}" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                app:dateTime="@{viewModel.account.createTime}"/>
+
             <Button
                 android:id="@+id/btn_ok"
                 android:layout_width="match_parent"

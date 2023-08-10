@@ -39,6 +39,7 @@ public class DemoViewModel extends BaseViewModel {
             }
             Account account = new Account("账户名" + Math.random());
             account.setHeadUrl("https://mmbiz.qpic.cn/mmbiz/MOu2ZNAwZwOWcVeCuqAe6AhPAGjaLm4E3ZhcuhgE19sE9JaQm53AEriaibbE555XCWIbiaibKUUujwLHHJ2VAJy0SA/640?wx_fmt=jpeg&wxfrom=5&wx_lazy=1&wx_co=1");
+            account.setCreateTime(System.currentTimeMillis());
             mAccount.postValue(account);
             dismissLoading();
         }).start();

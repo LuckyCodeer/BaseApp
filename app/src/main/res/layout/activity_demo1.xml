@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="userName"
             type="String" />
@@ -24,7 +26,7 @@
             name="vm"
             type="com.app.demo.MyViewModel" />
 
-        <import type="android.view.View"/>
+        <import type="android.view.View" />
     </data>
 
     <LinearLayout
@@ -37,56 +39,55 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{userName}"/>
+            android:text="@{userName}" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="颜色"
-            android:textColor="@{colorType==1?@color/main_color:@color/black}"/>
+            android:textColor="@{colorType==1?@color/main_color:@color/black}" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{userName??nickName}"
-            android:visibility="@{userName==`lisi`?View.VISIBLE:View.GONE}"/>
+            android:visibility="@{userName==`lisi`?View.VISIBLE:View.GONE}" />
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
         <ImageView
             android:id="@+id/image"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/tv_name1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{vm.name}"/>
+            android:text="@{vm.name}" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{tvName1.text}"/>
+            android:text="@{tvName1.text}" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@={vm.name}"/>
+            android:text="@={vm.name}" />
 
         <include
             layout="@layout/item_layout"
-            app:bind="@{vm}"/>
+            app:vm="@{vm}" />
 
         <Button
             android:id="@+id/btn_ok"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="点我"
             android:onClick="@{()-> vm.showMsg()}"
-            />
+            android:text="点我" />
 
     </LinearLayout>
 </layout>

@@ -29,9 +29,17 @@ public class BindingAdapterUtils {
                 .into(imageView);
     }
 
-  /*  @BindingAdapter(value = {"time"}, requireAll = false)
-    public static void setDateTime(TextView textView, long timeS, String f) {
-//        SimpleDateFormat format = new SimpleDateFormat(f, Locale.CHINA);
-//        textView.setText(format.format(new Date(timeS)));
-    }*/
+    /**
+     * 日期格式化
+     *
+     * @param timestamp 时间戳
+     */
+    @BindingAdapter(value = {"dateTime"})
+    public static void setDateTime(TextView textView, long timestamp) {
+        if (timestamp == 0) {
+            return;
+        }
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
+        textView.setText(format.format(new Date(timestamp)));
+    }
 }

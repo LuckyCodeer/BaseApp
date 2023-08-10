@@ -13,6 +13,7 @@ import com.app.BR;
 public class Account extends BaseObservable {
     private String accountName;
     private String headUrl;
+    private long createTime;
 
     public Account() {
     }
@@ -37,5 +38,13 @@ public class Account extends BaseObservable {
 
     public void setHeadUrl(String headUrl) {
         this.headUrl = headUrl;
+    }
+
+    public long getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(long createTime) {
+        this.createTime = createTime;
     }
 }
