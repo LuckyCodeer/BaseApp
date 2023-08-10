@@ -114,8 +114,20 @@ public class DemoViewModel extends BaseViewModel {
     }
 
     @Override
+    public void onResume(@NonNull LifecycleOwner owner) {
+        super.onResume(owner);
+    }
+
+    @Override
+    public void onPause(@NonNull LifecycleOwner owner) {
+        super.onPause(owner);
+        Log.i("TAG", "=============onPause=============");
+    }
+
+    @Override
     protected void onCleared() {
         super.onCleared();
+        Log.i("TAG", "=============onCleared=============");
         if (mCountDownTimer != null) {
             mCountDownTimer.cancel();
         }
