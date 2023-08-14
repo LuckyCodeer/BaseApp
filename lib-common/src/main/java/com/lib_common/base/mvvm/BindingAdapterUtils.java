@@ -12,6 +12,8 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
+ * 通用@BindingAdapter
+ * 这里只放置通用的方法，和业务相关的方法请放到业务模块下
  * created by yhw
  * date 2023/8/9
  */
@@ -26,6 +28,7 @@ public class BindingAdapterUtils {
     public static void loadImage(ImageView imageView, String imageUrl) {
         Glide.with(imageView.getContext()).load(imageUrl)
                 .placeholder(com.lib_src.R.drawable.icon_placeholder)
+                .error(com.lib_src.R.drawable.icon_placeholder)
                 .into(imageView);
     }
 
@@ -34,12 +37,12 @@ public class BindingAdapterUtils {
      *
      * @param timestamp 时间戳
      */
-    @BindingAdapter(value = {"dateTime"})
-    public static void setDateTime(TextView textView, long timestamp) {
+    @BindingAdapter(value = {"dateTime", "format"}, requireAll = false)
+    public static void setDateTime(TextView textView, long timestamp, String format) {
         if (timestamp == 0) {
             return;
         }
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
-        textView.setText(format.format(new Date(timestamp)));
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format, Locale.CHINA);
+        textView.setText(simpleDateFormat.format(new Date(timestamp)));
     }
 }
