@@ -15,6 +15,7 @@ import com.lib_common.R;
 import com.lib_common.base.mvvm.BaseMvvmActivity;
 import com.lib_common.dialog.LoadingDialog;
 import com.lib_common.view.layout.ActionBar;
+import com.tencent.mmkv.MMKV;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -32,6 +33,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ARouter.getInstance().inject(this);
+        MMKV.initialize(this);
         if (!isDataBinding()) {
             //每个界面添加actionbar
             if (isShowActionBar()) {

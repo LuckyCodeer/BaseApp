@@ -260,6 +260,12 @@ public class BaseSmartRefreshLayout extends FrameLayout {
         mRecyclerView.addItemDecoration(decor);
     }
 
+    public void autoRefresh() {
+        if (mRefreshLayout != null) {
+            mRefreshLayout.autoRefresh();
+        }
+    }
+
     /**
      * 设置空布局文本提示
      *

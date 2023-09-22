@@ -13,7 +13,7 @@ import androidx.lifecycle.MutableLiveData;
  * date 2023/8/4
  */
 public class BaseViewModel extends AndroidViewModel implements DefaultLifecycleObserver {
-    private final MutableLiveData<Boolean> mShowLoading = new MutableLiveData<>(false);
+    private final MutableLiveData<Boolean> mShowLoading = new MutableLiveData<>();
     private final MutableLiveData<String> mLoadingMsg = new MutableLiveData<>();
 
     public BaseViewModel(@NonNull Application application) {
