@@ -2,6 +2,7 @@ package com.yhw.pgyer.adapter;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
@@ -10,6 +11,7 @@ import androidx.annotation.Nullable;
 
 import com.blankj.utilcode.util.ConvertUtils;
 import com.chad.library.adapter.base.viewholder.DataBindingHolder;
+import com.hjq.toast.ToastUtils;
 import com.lib_common.adapter.CommonAdapter;
 import com.tencent.mmkv.MMKV;
 import com.yhw.pgyer.Constants;
@@ -41,6 +43,7 @@ public class AppListAdapter extends CommonAdapter<App.AppInfo, AppListItemLayout
         }
         dataBinding.tvName.setText("APP名称：" + appInfo.getBuildName() + endName);
         dataBinding.tvSize.setText("大小：" + ConvertUtils.byte2FitMemorySize(Long.parseLong(appInfo.getBuildFileSize())));
+        dataBinding.tvDownCount.setText("下载次数：" + appInfo.getBuildDownloadCount());
         Log.i("TAG", "appType: " + appType + " ,lastBuildVersion: " + lastBuildVersion);
         if (lastBuildVersion > 0 && Integer.parseInt(appInfo.getBuildBuildVersion()) > lastBuildVersion) {
             dataBinding.ivNew.setVisibility(View.VISIBLE);
@@ -58,6 +61,10 @@ public class AppListAdapter extends CommonAdapter<App.AppInfo, AppListItemLayout
     }
 
     private void install(App.AppInfo appInfo) {
+        if (TextUtils.isEmpty(appInfo.getBuildBuildVersion()) || "0".equals(appInfo.getBuildBuildVersion())) {
+            ToastUtils.show("该版本有问题，请选择其他版本下载");
+            return;
+        }
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(HttpRequest.installApp(appInfo.getBuildKey())));
         getContext().startActivity(intent);
@@ -65,7 +72,7 @@ public class AppListAdapter extends CommonAdapter<App.AppInfo, AppListItemLayout
 
     public void setVersion() {
         appType = MMKV.defaultMMKV().getInt(Constants.BUILD_APP_KEY, 0);
-        lastBuildVersion = MMKV.defaultMMKV().getInt(appType == 0 ? Constants.DRIVER_BUILD_VERSION_KEY : Constants.SHIPPER_BUILD_VERSION_KEY, 0);
+        lastBuildVersion = MMKV.defaultMMKV().getInt(Constants.APP_KEY, 0);
         Log.i("TAG1111", "appType: " + appType + " ,lastBuildVersion: " + lastBuildVersion);
     }
 }

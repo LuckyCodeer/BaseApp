@@ -5,9 +5,11 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DividerItemDecoration;
 
+import com.blankj.utilcode.util.ClipboardUtils;
 import com.hjq.toast.ToastUtils;
 import com.lib_common.base.mvvm.BaseMvvmActivity;
 import com.lib_common.base.mvvm.BaseViewModel;
+import com.lib_common.dialog.BottomActionDialog;
 import com.lib_common.http.HttpListener;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
@@ -17,6 +19,9 @@ import com.yhw.pgyer.bean.App;
 import com.yhw.pgyer.databinding.ActivityAppListBinding;
 import com.yhw.pgyer.http.HttpRequest;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * created by yhw
  * date 2023/9/21
@@ -24,6 +29,7 @@ import com.yhw.pgyer.http.HttpRequest;
 public class AppListActivity extends BaseMvvmActivity<ActivityAppListBinding, BaseViewModel> {
     private int page = 1;
     private int appType;
+    private AppListAdapter mAdapter;
 
     @Override
     protected void initView() {
@@ -31,21 +37,43 @@ public class AppListActivity extends BaseMvvmActivity<ActivityAppListBinding, Ba
         hideActionBarBack();
         setTitle(R.string.app_name);
         mActionBar.setRightText("切换", view -> {
-            if (Constants.SHIPPER_APP_KEY.equals(Constants.APP_KEY)) {
-                Constants.APP_KEY = Constants.DRIVER_APP_KEY;
-                ToastUtils.show("已切换到司机APP");
-                appType = 0;
-            } else {
-                Constants.APP_KEY = Constants.SHIPPER_APP_KEY;
-                ToastUtils.show("已切换到货主APP");
-                appType = 1;
-            }
-            MMKV.defaultMMKV().putInt(Constants.BUILD_APP_KEY, appType);
-            mDataBinding.listLayout.autoRefresh();
+            List<String> items = new ArrayList<>();
+            items.add("司机");
+            items.add("货主");
+            items.add("PDA");
+            items.add("本应用");
+            BottomActionDialog dialog = new BottomActionDialog(this);
+            dialog.setTitle("切换应用");
+            dialog.setItems(items);
+            dialog.setOnConfirmSelectListener((position, name) -> {
+                ToastUtils.show("已切换到" + name);
+                appType = position;
+                switch (position) {
+                    case 0:
+                        Constants.APP_KEY = Constants.DRIVER_APP_KEY;
+                        break;
+                    case 1:
+                        Constants.APP_KEY = Constants.SHIPPER_APP_KEY;
+                        break;
+                    case 2:
+                        Constants.APP_KEY = Constants.PDA_APP_KEY;
+                        break;
+                    case 3:
+                        Constants.APP_KEY = Constants.MYSELF_APP_KEY;
+                        break;
+                }
+                MMKV.defaultMMKV().putInt(Constants.BUILD_APP_KEY, appType);
+                mDataBinding.listLayout.autoRefresh();
+            });
+            dialog.show();
         });
         appType = MMKV.defaultMMKV().getInt(Constants.BUILD_APP_KEY, 0);
         if (appType == 1) {
             Constants.APP_KEY = Constants.SHIPPER_APP_KEY;
+        } else if (appType == 2) {
+            Constants.APP_KEY = Constants.PDA_APP_KEY;
+        } else if (appType == 3) {
+            Constants.APP_KEY = Constants.MYSELF_APP_KEY;
         } else {
             Constants.APP_KEY = Constants.DRIVER_APP_KEY;
         }
@@ -68,6 +96,19 @@ public class AppListActivity extends BaseMvvmActivity<ActivityAppListBinding, Ba
                 getAppList();
             }
         });
+
+        mDataBinding.listLayout.setOnItemLongClickListener((itemView, position, item) -> {
+            App.AppInfo appInfo = (App.AppInfo) item;
+            BottomActionDialog dialog = new BottomActionDialog(this);
+            final List<String> items = new ArrayList<>();
+            items.add("复制下载链接");
+            dialog.setItems(items);
+            dialog.show();
+            dialog.setOnConfirmSelectListener((i, name) -> {
+                ClipboardUtils.copyText(HttpRequest.installApp(appInfo.getBuildKey()));
+                ToastUtils.show("复制成功");
+            });
+        });
     }
 
     @Override
@@ -89,15 +130,14 @@ public class AppListActivity extends BaseMvvmActivity<ActivityAppListBinding, Ba
                 if (app == null) {
                     return;
                 }
-                AppListAdapter adapter = new AppListAdapter(app.getList());
-                adapter.setVersion();
-                mDataBinding.listLayout.setAdapter(adapter, page, app.getPageCount());
-                if (app.getList().size() > 0) {
-                    if (page == 1) {
-                        Log.i("AppListActivity bb", "appType: " + appType);
-                        MMKV.defaultMMKV().putInt(appType == 0 ? Constants.DRIVER_BUILD_VERSION_KEY : Constants.SHIPPER_BUILD_VERSION_KEY,
-                                Integer.parseInt(app.getList().get(0).getBuildBuildVersion()));
-                    }
+                mAdapter = new AppListAdapter(app.getList());
+                mAdapter.setVersion();
+                mDataBinding.listLayout.setAdapter(mAdapter, page, app.getPageCount());
+                //记录最后一次查询记录的buildVersion
+                if (page == 1 && app.getList() != null && app.getList().size() > 0 && !"0".equals(app.getList().get(0).getBuildBuildVersion())) {
+                    Log.i("AppListActivity bb", "appType: " + appType);
+                    MMKV.defaultMMKV().putInt(Constants.APP_KEY,
+                            Integer.parseInt(app.getList().get(0).getBuildBuildVersion()));
                 }
             }
 

@@ -6,7 +6,7 @@ package com.yhw.pgyer.http;
  */
 public class Api {
 
-    public static String pgyer = "https://www.xcxwo.com/";
+    public static String pgyer = "https://www.pgyer.com/";
     /**
      * app版本
      */

@@ -35,6 +35,7 @@ public class App implements Serializable {
         private String buildUpdateDescription;
         private String buildCreated;
         private String buildFileSize;
+        private String buildDownloadCount;
 
         public String getBuildKey() {
             return buildKey;
@@ -90,6 +91,14 @@ public class App implements Serializable {
 
         public void setBuildFileSize(String buildFileSize) {
             this.buildFileSize = buildFileSize;
+        }
+
+        public String getBuildDownloadCount() {
+            return buildDownloadCount;
+        }
+
+        public void setBuildDownloadCount(String buildDownloadCount) {
+            this.buildDownloadCount = buildDownloadCount;
         }
     }
 }
