@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.blankj.utilcode.util.ConvertUtils;
+import com.blankj.utilcode.util.EncryptUtils;
 import com.chad.library.adapter.base.viewholder.DataBindingHolder;
 import com.hjq.toast.ToastUtils;
 import com.lib_common.adapter.CommonAdapter;
@@ -18,6 +19,7 @@ import com.yhw.pgyer.Constants;
 import com.yhw.pgyer.R;
 import com.yhw.pgyer.bean.App;
 import com.yhw.pgyer.databinding.AppListItemLayoutBinding;
+import com.yhw.pgyer.dialog.DownLoadDialog;
 import com.yhw.pgyer.http.HttpRequest;
 
 import java.util.List;
@@ -42,7 +44,7 @@ public class AppListAdapter extends CommonAdapter<App.AppInfo, AppListItemLayout
             endName = "(融合)";
         }
         dataBinding.tvName.setText("APP名称：" + appInfo.getBuildName() + endName);
-        dataBinding.tvSize.setText("大小：" + ConvertUtils.byte2FitMemorySize(Long.parseLong(appInfo.getBuildFileSize())));
+        dataBinding.tvSize.setText("大小：" + ConvertUtils.byte2FitMemorySize(Long.parseLong(appInfo.getBuildFileSize())) + "\u3000\u3000下载次数：" + appInfo.getBuildDownloadCount());
         dataBinding.tvDownCount.setText("下载次数：" + appInfo.getBuildDownloadCount());
         Log.i("TAG", "appType: " + appType + " ,lastBuildVersion: " + lastBuildVersion);
         if (lastBuildVersion > 0 && Integer.parseInt(appInfo.getBuildBuildVersion()) > lastBuildVersion) {
@@ -65,9 +67,12 @@ public class AppListAdapter extends CommonAdapter<App.AppInfo, AppListItemLayout
             ToastUtils.show("该版本有问题，请选择其他版本下载");
             return;
         }
-        Intent intent = new Intent(Intent.ACTION_VIEW);
+        /*Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(HttpRequest.installApp(appInfo.getBuildKey())));
-        getContext().startActivity(intent);
+        getContext().startActivity(intent);*/
+        new DownLoadDialog(getContext())
+                .show()
+                .down(appInfo);
     }
 
     public void setVersion() {

@@ -1,5 +1,7 @@
 package com.yhw.pgyer.http;
 
+import android.util.Log;
+
 import androidx.lifecycle.LifecycleOwner;
 
 import com.lib_common.http.HttpListener;
@@ -12,6 +14,7 @@ import com.yhw.pgyer.http.parser.ResponsePgyerParser;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.reactivex.disposables.Disposable;
 import rxhttp.RxHttp;
 
 /**
@@ -44,5 +47,23 @@ public class HttpRequest {
      */
     public static String installApp(String buildKey) {
         return Api.pgyer + Api.app_install + "?_api_key=" + Constants.API_KEY + "&buildKey=" + buildKey + "&buildPassword="+Constants.INSTALL_PASSWORD;
+    }
+
+    /**
+     * 下载文件
+     *
+     * @param downUrl 文件地址
+     */
+    public static Disposable downFile(LifecycleOwner owner, String downUrl, String descPath, HttpListener<String> httpListener) {
+        return RxHttp.get(downUrl)
+                .toDownloadObservable(descPath, false)
+                .onMainProgress(progress -> {
+                    Log.i("TAG", "progress==> " +  progress);
+                    httpListener.onMainProgress(progress);
+                })
+                .as(RxLife.asOnMain(owner))
+                .subscribe(httpListener::onSuccess, (OnError) error ->
+                        httpListener.onFail(error.getErrorCode(), error.getErrorMsg())
+                );
     }
 }
