@@ -81,7 +81,7 @@ public class BaseApplication extends MultiDexApplication {
     }
 
     private OkHttpClient genericClient() {
-        final int timeout = 60;
+        final int timeout = 30;
         final OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(timeout, TimeUnit.SECONDS);
         builder.readTimeout(timeout, TimeUnit.SECONDS);

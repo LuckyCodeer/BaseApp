@@ -294,6 +294,10 @@ public class BaseSmartRefreshLayout extends FrameLayout {
         return mRecyclerView;
     }
 
+    public void smoothScrollToPosition(int position) {
+        mRecyclerView.smoothScrollToPosition(position);
+    }
+
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();

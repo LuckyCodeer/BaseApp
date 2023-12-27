@@ -145,4 +145,8 @@ public class CommonAlertDialog {
     public void dismiss() {
         mDialog.dismiss();
     }
+
+    public boolean isShowing() {
+        return mDialog != null && mDialog.isShowing();
+    }
 }

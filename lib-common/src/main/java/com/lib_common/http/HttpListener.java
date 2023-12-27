@@ -1,5 +1,7 @@
 package com.lib_common.http;
 
+import rxhttp.wrapper.entity.Progress;
+
 /**
  * http接口请求结果回调
  * created by yhw
@@ -20,6 +22,13 @@ public interface HttpListener<T> {
      * @param errorMsg  错误信息
      */
     default void onFail(int errorCode, String errorMsg) {
+
+    }
+
+    /**
+     * 下载进度回调
+     */
+    default void onMainProgress(Progress progress) {
 
     }
 }
