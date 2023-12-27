@@ -36,6 +36,42 @@ public class App implements Serializable {
         private String buildCreated;
         private String buildFileSize;
         private String buildDownloadCount;
+        private String buildFileKey;
+        private String buildDescription;
+        private String appKey;
+        private String buildIdentifier;
+
+        public String getBuildIdentifier() {
+            return buildIdentifier;
+        }
+
+        public void setBuildIdentifier(String buildIdentifier) {
+            this.buildIdentifier = buildIdentifier;
+        }
+
+        public String getAppKey() {
+            return appKey;
+        }
+
+        public void setAppKey(String appKey) {
+            this.appKey = appKey;
+        }
+
+        public String getBuildFileKey() {
+            return buildFileKey;
+        }
+
+        public void setBuildFileKey(String buildFileKey) {
+            this.buildFileKey = buildFileKey;
+        }
+
+        public String getBuildDescription() {
+            return buildDescription;
+        }
+
+        public void setBuildDescription(String buildDescription) {
+            this.buildDescription = buildDescription;
+        }
 
         public String getBuildKey() {
             return buildKey;

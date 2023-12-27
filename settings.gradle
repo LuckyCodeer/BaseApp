@@ -20,3 +20,6 @@ rootProject.name = "BaseApp"
 include ':app'
 include ':lib-common'
 include ':lib-src'
+include ':hddapp'
+include ':pgyer'
+include ':sensorsdata'

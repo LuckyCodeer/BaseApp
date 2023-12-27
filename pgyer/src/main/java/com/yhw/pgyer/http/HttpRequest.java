@@ -26,6 +26,7 @@ public class HttpRequest {
      * 获取APP列表
      */
     public static void getAppList(LifecycleOwner owner, int page, HttpListener<App> httpListener) {
+        Log.i("TAG","APP_KEY===> " + Constants.APP_KEY);
         Map<String,Object> req = new HashMap<>();
         req.put("page", page);
         req.put("_api_key", Constants.API_KEY);
@@ -35,6 +36,45 @@ public class HttpRequest {
                 .setDomainIfAbsent(Api.pgyer)
                 .setHeader("Content-Type", "application/x-www-form-urlencoded")
                 .toObservable(new ResponsePgyerParser<App>() {
+                })
+                .as(RxLife.asOnMain(owner))
+                .subscribe(httpListener::onSuccess, (OnError) error ->
+                        httpListener.onFail(error.getErrorCode(), error.getErrorMsg())
+                );
+    }
+
+    /**
+     * 获取账号下的APP列表
+     */
+    public static void getMyAppList(LifecycleOwner owner, int page, HttpListener<App> httpListener) {
+        Map<String,Object> req = new HashMap<>();
+        req.put("page", page);
+        req.put("_api_key", Constants.API_KEY);
+        RxHttp.postForm(Api.my_app_list)
+                .addAll(req)
+                .setDomainIfAbsent(Api.pgyer)
+                .setHeader("Content-Type", "application/x-www-form-urlencoded")
+                .toObservable(new ResponsePgyerParser<App>() {
+                })
+                .as(RxLife.asOnMain(owner))
+                .subscribe(httpListener::onSuccess, (OnError) error ->
+                        httpListener.onFail(error.getErrorCode(), error.getErrorMsg())
+                );
+    }
+
+
+    /**
+     * 检测本APP是否有更新
+     */
+    public static void checkAppUpgrade(LifecycleOwner owner, HttpListener<App.AppInfo> httpListener) {
+        Map<String,Object> req = new HashMap<>();
+        req.put("appKey", Constants.MYSELF_APP_KEY);
+        req.put("_api_key", Constants.API_KEY);
+        RxHttp.postForm(Api.check_app_upgrade)
+                .addAll(req)
+                .setDomainIfAbsent(Api.pgyer)
+                .setHeader("Content-Type", "application/x-www-form-urlencoded")
+                .toObservable(new ResponsePgyerParser<App.AppInfo>() {
                 })
                 .as(RxLife.asOnMain(owner))
                 .subscribe(httpListener::onSuccess, (OnError) error ->

@@ -1,7 +1,5 @@
 package com.yhw.pgyer.adapter;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -10,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.blankj.utilcode.util.ConvertUtils;
-import com.blankj.utilcode.util.EncryptUtils;
 import com.chad.library.adapter.base.viewholder.DataBindingHolder;
 import com.hjq.toast.ToastUtils;
 import com.lib_common.adapter.CommonAdapter;
@@ -20,7 +17,6 @@ import com.yhw.pgyer.R;
 import com.yhw.pgyer.bean.App;
 import com.yhw.pgyer.databinding.AppListItemLayoutBinding;
 import com.yhw.pgyer.dialog.DownLoadDialog;
-import com.yhw.pgyer.http.HttpRequest;
 
 import java.util.List;
 
@@ -29,7 +25,6 @@ import java.util.List;
  * date 2023/9/21
  */
 public class AppListAdapter extends CommonAdapter<App.AppInfo, AppListItemLayoutBinding> {
-    private static int appType;
     private static int lastBuildVersion;
 
     public AppListAdapter(@NonNull List<? extends App.AppInfo> items) {
@@ -40,13 +35,15 @@ public class AppListAdapter extends CommonAdapter<App.AppInfo, AppListItemLayout
     public void onBindViewHolder(@NonNull DataBindingHolder<AppListItemLayoutBinding> holder, AppListItemLayoutBinding dataBinding, int position, @Nullable App.AppInfo appInfo) {
         dataBinding.setAppInfo(appInfo);
         String endName = "";
-        if ("9.9.8".equals(appInfo.getBuildVersion()) || appInfo.getBuildVersion().startsWith("2.")) {
+        if (("9.9.8".equals(appInfo.getBuildVersion()) || Integer.parseInt(appInfo.getBuildVersion().replace(".","")) >= 240)
+                && !"9.9.9".equals(appInfo.getBuildVersion())
+                && ("com.yunxiaobao.tms.driver".equals(appInfo.getBuildIdentifier()) || "com.yunxiaobao.shipper".equals(appInfo.getBuildIdentifier()))) {
             endName = "(融合)";
         }
         dataBinding.tvName.setText("APP名称：" + appInfo.getBuildName() + endName);
-        dataBinding.tvSize.setText("大小：" + ConvertUtils.byte2FitMemorySize(Long.parseLong(appInfo.getBuildFileSize())) + "\u3000\u3000下载次数：" + appInfo.getBuildDownloadCount());
+        dataBinding.tvSize.setText("大小：" + ConvertUtils.byte2FitMemorySize(Long.parseLong(appInfo.getBuildFileSize())) + "\u3000下载次数：" + appInfo.getBuildDownloadCount());
         dataBinding.tvDownCount.setText("下载次数：" + appInfo.getBuildDownloadCount());
-        Log.i("TAG", "appType: " + appType + " ,lastBuildVersion: " + lastBuildVersion);
+        Log.i("TAG", "getBuildName: " + appInfo.getBuildName() + "lastBuildVersion: " + lastBuildVersion);
         if (lastBuildVersion > 0 && Integer.parseInt(appInfo.getBuildBuildVersion()) > lastBuildVersion) {
             dataBinding.ivNew.setVisibility(View.VISIBLE);
         } else {
@@ -76,8 +73,6 @@ public class AppListAdapter extends CommonAdapter<App.AppInfo, AppListItemLayout
     }
 
     public void setVersion() {
-        appType = MMKV.defaultMMKV().getInt(Constants.BUILD_APP_KEY, 0);
         lastBuildVersion = MMKV.defaultMMKV().getInt(Constants.APP_KEY, 0);
-        Log.i("TAG1111", "appType: " + appType + " ,lastBuildVersion: " + lastBuildVersion);
     }
 }

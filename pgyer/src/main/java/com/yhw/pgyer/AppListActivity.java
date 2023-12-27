@@ -1,15 +1,19 @@
 package com.yhw.pgyer;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DividerItemDecoration;
 
+import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.ClipboardUtils;
 import com.hjq.toast.ToastUtils;
 import com.lib_common.base.mvvm.BaseMvvmActivity;
 import com.lib_common.base.mvvm.BaseViewModel;
 import com.lib_common.dialog.BottomActionDialog;
+import com.lib_common.dialog.BottomListDialog;
+import com.lib_common.dialog.CommonAlertDialog;
 import com.lib_common.http.HttpListener;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
@@ -28,8 +32,8 @@ import java.util.List;
  */
 public class AppListActivity extends BaseMvvmActivity<ActivityAppListBinding, BaseViewModel> {
     private int page = 1;
-    private int appType;
     private AppListAdapter mAdapter;
+    private CommonAlertDialog mAppUpgradeDialog;
 
     @Override
     protected void initView() {
@@ -37,48 +41,90 @@ public class AppListActivity extends BaseMvvmActivity<ActivityAppListBinding, Ba
         hideActionBarBack();
         setTitle(R.string.app_name);
         mActionBar.setRightText("切换", view -> {
-            List<String> items = new ArrayList<>();
-            items.add("司机");
-            items.add("货主");
-            items.add("PDA");
-            items.add("本应用");
-            BottomActionDialog dialog = new BottomActionDialog(this);
-            dialog.setTitle("切换应用");
-            dialog.setItems(items);
-            dialog.setOnConfirmSelectListener((position, name) -> {
-                ToastUtils.show("已切换到" + name);
-                appType = position;
-                switch (position) {
-                    case 0:
-                        Constants.APP_KEY = Constants.DRIVER_APP_KEY;
-                        break;
-                    case 1:
-                        Constants.APP_KEY = Constants.SHIPPER_APP_KEY;
-                        break;
-                    case 2:
-                        Constants.APP_KEY = Constants.PDA_APP_KEY;
-                        break;
-                    case 3:
-                        Constants.APP_KEY = Constants.MYSELF_APP_KEY;
-                        break;
+            showLoading();
+            HttpRequest.getMyAppList(this, 1, new HttpListener<App>() {
+                @Override
+                public void onSuccess(App app) {
+                    dismissLoading();
+                    showMyAppListDialog(app);
                 }
-                MMKV.defaultMMKV().putInt(Constants.BUILD_APP_KEY, appType);
-                mDataBinding.listLayout.autoRefresh();
+
+                @Override
+                public void onFail(int errorCode, String errorMsg) {
+                    HttpListener.super.onFail(errorCode, errorMsg);
+                    dismissLoading();
+                    ToastUtils.show(errorMsg);
+                    showMyAppListDialog(null);
+                }
             });
-            dialog.show();
         });
-        appType = MMKV.defaultMMKV().getInt(Constants.BUILD_APP_KEY, 0);
-        if (appType == 1) {
-            Constants.APP_KEY = Constants.SHIPPER_APP_KEY;
-        } else if (appType == 2) {
-            Constants.APP_KEY = Constants.PDA_APP_KEY;
-        } else if (appType == 3) {
-            Constants.APP_KEY = Constants.MYSELF_APP_KEY;
-        } else {
-            Constants.APP_KEY = Constants.DRIVER_APP_KEY;
-        }
+        Constants.APP_KEY = MMKV.defaultMMKV().getString(Constants.BUILD_APP_KEY, Constants.DRIVER_APP_KEY);
         mDataBinding.listLayout.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         getAppList();
+    }
+
+    private void showMyAppListDialog(App app) {
+        if (app != null) {
+            List<App.AppInfo> appList = app.getList();
+            if (appList != null && appList.size() != 0) {
+                List<String> items = new ArrayList<>();
+                List<App.AppInfo> newList = new ArrayList<>();
+                for (App.AppInfo appInfo : appList) {
+                    //排除IOS
+                    if (appInfo.getBuildFileKey().lastIndexOf(".apk") != -1) {
+                        items.add(appInfo.getBuildName());
+                        newList.add(appInfo);
+                    }
+                }
+                showMyAppListNetDialog(items, newList);
+                return;
+            }
+        }
+        showMyAppListDefDialog();
+    }
+
+    private void showMyAppListNetDialog(List<String> items, List<App.AppInfo> appInfos) {
+        BottomListDialog dialog = new BottomListDialog(this);
+        dialog.setTitle("切换应用");
+        dialog.setItems(items);
+        dialog.setOnConfirmSelectListener((position, name) -> {
+            ToastUtils.show("已切换到" + name);
+            Constants.APP_KEY = appInfos.get(position).getAppKey();
+            MMKV.defaultMMKV().putString(Constants.BUILD_APP_KEY, Constants.APP_KEY);
+            mDataBinding.listLayout.autoRefresh();
+        });
+        dialog.show();
+    }
+
+    private void showMyAppListDefDialog() {
+        List<String> items = new ArrayList<>();
+        items.add("司机");
+        items.add("货主");
+        items.add("PDA");
+        items.add("本应用");
+        BottomActionDialog dialog = new BottomActionDialog(this);
+        dialog.setTitle("切换应用");
+        dialog.setItems(items);
+        dialog.setOnConfirmSelectListener((position, name) -> {
+            ToastUtils.show("已切换到" + name);
+            switch (position) {
+                case 0:
+                    Constants.APP_KEY = Constants.DRIVER_APP_KEY;
+                    break;
+                case 1:
+                    Constants.APP_KEY = Constants.SHIPPER_APP_KEY;
+                    break;
+                case 2:
+                    Constants.APP_KEY = Constants.PDA_APP_KEY;
+                    break;
+                case 3:
+                    Constants.APP_KEY = Constants.MYSELF_APP_KEY;
+                    break;
+            }
+            MMKV.defaultMMKV().putString(Constants.BUILD_APP_KEY, Constants.APP_KEY);
+            mDataBinding.listLayout.autoRefresh();
+        });
+        dialog.show();
     }
 
     @Override
@@ -135,9 +181,12 @@ public class AppListActivity extends BaseMvvmActivity<ActivityAppListBinding, Ba
                 mDataBinding.listLayout.setAdapter(mAdapter, page, app.getPageCount());
                 //记录最后一次查询记录的buildVersion
                 if (page == 1 && app.getList() != null && app.getList().size() > 0 && !"0".equals(app.getList().get(0).getBuildBuildVersion())) {
-                    Log.i("AppListActivity bb", "appType: " + appType);
+                    Log.i("AppListActivity bb", "getBuildName: " + app.getList().get(0).getBuildName());
                     MMKV.defaultMMKV().putInt(Constants.APP_KEY,
                             Integer.parseInt(app.getList().get(0).getBuildBuildVersion()));
+                }
+                if (page == 1) {
+                    mDataBinding.listLayout.smoothScrollToPosition(0);
                 }
             }
 
@@ -151,4 +200,37 @@ public class AppListActivity extends BaseMvvmActivity<ActivityAppListBinding, Ba
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkAppUpgrade();
+    }
+
+    private void checkAppUpgrade() {
+        if (mAppUpgradeDialog != null && mAppUpgradeDialog.isShowing()) {
+            return;
+        }
+        HttpRequest.checkAppUpgrade(this, new HttpListener<App.AppInfo>() {
+            @Override
+            public void onSuccess(App.AppInfo app) {
+                if (app == null || TextUtils.isEmpty(app.getBuildVersion()) || "0".equals(app.getBuildVersion())
+                        || "0".equals(app.getBuildBuildVersion())) {
+                    return;
+                }
+                if (Integer.parseInt(app.getBuildVersion().replace(".", "")) > AppUtils.getAppVersionCode()) {
+                    mAppUpgradeDialog = new CommonAlertDialog(AppListActivity.this)
+                            .setTitle("发现新版本")
+                            .setLeftMessage("更新内容：\n" + (TextUtils.isEmpty(app.getBuildUpdateDescription()) ? "无" : app.getBuildUpdateDescription())
+                                    + "\n\n请切换到[Android蒲公英安装]，下载最新版本。")
+                            .hideCancel();
+                    mAppUpgradeDialog.show();
+                }
+            }
+
+            @Override
+            public void onFail(int errorCode, String errorMsg) {
+                HttpListener.super.onFail(errorCode, errorMsg);
+            }
+        });
+    }
 }
