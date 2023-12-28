@@ -34,13 +34,14 @@ public class AppListAdapter extends CommonAdapter<App.AppInfo, AppListItemLayout
     @Override
     public void onBindViewHolder(@NonNull DataBindingHolder<AppListItemLayoutBinding> holder, AppListItemLayoutBinding dataBinding, int position, @Nullable App.AppInfo appInfo) {
         dataBinding.setAppInfo(appInfo);
-        String endName = "";
         if (("9.9.8".equals(appInfo.getBuildVersion()) || Integer.parseInt(appInfo.getBuildVersion().replace(".","")) >= 240)
                 && !"9.9.9".equals(appInfo.getBuildVersion())
-                && ("com.yunxiaobao.tms.driver".equals(appInfo.getBuildIdentifier()) || "com.yunxiaobao.shipper".equals(appInfo.getBuildIdentifier()))) {
-            endName = "(融合)";
+                && (Constants.APP_DRIVER_PACKAGE_NAME.equals(appInfo.getBuildIdentifier()) || Constants.APP_SHIPPER_PACKAGE_NAME.equals(appInfo.getBuildIdentifier()))) {
+            dataBinding.tvFlag.setVisibility(View.VISIBLE);
+        } else {
+            dataBinding.tvFlag.setVisibility(View.GONE);
         }
-        dataBinding.tvName.setText("APP名称：" + appInfo.getBuildName() + endName);
+        dataBinding.tvName.setText("APP名称：" + appInfo.getBuildName());
         dataBinding.tvSize.setText("大小：" + ConvertUtils.byte2FitMemorySize(Long.parseLong(appInfo.getBuildFileSize())) + "\u3000下载次数：" + appInfo.getBuildDownloadCount());
         dataBinding.tvDownCount.setText("下载次数：" + appInfo.getBuildDownloadCount());
         Log.i("TAG", "getBuildName: " + appInfo.getBuildName() + "lastBuildVersion: " + lastBuildVersion);

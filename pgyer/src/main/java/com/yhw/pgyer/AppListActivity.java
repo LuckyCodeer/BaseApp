@@ -23,8 +23,13 @@ import com.yhw.pgyer.bean.App;
 import com.yhw.pgyer.databinding.ActivityAppListBinding;
 import com.yhw.pgyer.http.HttpRequest;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * created by yhw
@@ -39,7 +44,8 @@ public class AppListActivity extends BaseMvvmActivity<ActivityAppListBinding, Ba
     protected void initView() {
         super.initView();
         hideActionBarBack();
-        setTitle(R.string.app_name);
+        mActionBar.setCenterTextSize(16);
+        setTitle(getString(R.string.app_name) + "(" + AppUtils.getAppVersionName() + ")");
         mActionBar.setRightText("切换", view -> {
             showLoading();
             HttpRequest.getMyAppList(this, 1, new HttpListener<App>() {
@@ -70,8 +76,21 @@ public class AppListActivity extends BaseMvvmActivity<ActivityAppListBinding, Ba
                 List<String> items = new ArrayList<>();
                 List<App.AppInfo> newList = new ArrayList<>();
                 for (App.AppInfo appInfo : appList) {
-                    //排除IOS
-                    if (appInfo.getBuildFileKey().lastIndexOf(".apk") != -1) {
+                    //排除IOS及2022年之前的应用
+                    int year = 2022;
+                    try {
+                        String createTime = appInfo.getBuildCreated();
+                        if (!TextUtils.isEmpty(createTime)) {
+                            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
+                            Date date = format.parse(createTime);
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.setTime(date);
+                            year = calendar.get(Calendar.YEAR);
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    if ("2".equals(appInfo.getBuildType()) && year >= 2022) {
                         items.add(appInfo.getBuildName());
                         newList.add(appInfo);
                     }
@@ -90,6 +109,7 @@ public class AppListActivity extends BaseMvvmActivity<ActivityAppListBinding, Ba
         dialog.setOnConfirmSelectListener((position, name) -> {
             ToastUtils.show("已切换到" + name);
             Constants.APP_KEY = appInfos.get(position).getAppKey();
+            Constants.INSTALL_PASSWORD = appInfos.get(position).getBuildPassword();
             MMKV.defaultMMKV().putString(Constants.BUILD_APP_KEY, Constants.APP_KEY);
             mDataBinding.listLayout.autoRefresh();
         });

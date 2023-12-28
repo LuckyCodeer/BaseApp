@@ -40,6 +40,24 @@ public class App implements Serializable {
         private String buildDescription;
         private String appKey;
         private String buildIdentifier;
+        private String buildType; //应用类型（1:iOS; 2:Android）
+        private String buildPassword;
+
+        public String getBuildPassword() {
+            return buildPassword;
+        }
+
+        public void setBuildPassword(String buildPassword) {
+            this.buildPassword = buildPassword;
+        }
+
+        public String getBuildType() {
+            return buildType;
+        }
+
+        public void setBuildType(String buildType) {
+            this.buildType = buildType;
+        }
 
         public String getBuildIdentifier() {
             return buildIdentifier;
