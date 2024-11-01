@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 
 import com.bigkoo.pickerview.adapter.ArrayWheelAdapter;
@@ -54,6 +55,7 @@ public class BottomListDialog {
         mDataBinding.wheelView.setTextSize(16);
         mDataBinding.wheelView.setLineSpacingMultiplier(2.8f);
         mDataBinding.wheelView.setDividerColor(context.getResources().getColor(com.lib_src.R.color.main_color));
+        mDataBinding.wheelView.setTextColorCenter(ContextCompat.getColor(context, com.lib_src.R.color.main_color));
         mDataBinding.wheelView.setDividerWidth(2);
     }
 
